@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import Header from '@/components/blankHeader'
-import SetPassword from './containers/setPassword'
+import RegComplete from './containers/regComplete'
 
 
 export const metadata: Metadata = {
-  title: 'Binancee | Set Registration Password',
-  description: 'Set Up Password for Binancee Account',
+  title: 'Binancee | Registration Complete',
+  description: 'Registration Compltete6',
 }
 
 export default function Email_Verification() {
@@ -13,7 +13,7 @@ export default function Email_Verification() {
     <>
       <div className='flex flex-col h-[100vh]'>
         <Header />
-        <SetPassword />
+        <RegComplete />
       </div>
     </>
   )

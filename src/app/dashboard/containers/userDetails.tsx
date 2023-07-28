@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import profile from '@/assets/default-avater.svg'
+import { PencilIcon, PencilSquareIcon } from '@heroicons/react/24/solid'
 
 const userDetails = () => {
     return (
@@ -11,7 +13,7 @@ const userDetails = () => {
                         <div className="flex gap-4 items-center">
                             <Image src={profile} alt='' />
                             <div className='flex flex-col gap-4'>
-                                <p className='font-semibold'>Username-id-12364</p>
+                                <p className='font-semibold'>Username-id-12364 <Link href="./" className=""><PencilSquareIcon className="w-5 h-5 p-1 rounded-sm hover:text-gray-800 text-gray-500 bg-gray-200" /></Link></p>
                             </div>
                         </div>
                     </li>

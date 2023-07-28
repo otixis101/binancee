@@ -72,12 +72,12 @@ const Navbar = () => {
                     <div className=" bg-red-400 text-white text-xs absolute outline outline-2 outline-white right-[-5px] top-[-5px] rounded-full w-4 h-4 flex items-center justify-center">7</div>
                 </Link></li>
                 {/* Drodown on Mobile Device */}
-                <li className="flex flex-col relative md:hidden">
+                <li className="flex flex-col relative h-full md:hidden">
                     <button onClick={toggleDropdown}>
                         <Bars3Icon className="w-8 h-8" />
                     </button>
                     {isOpen && (
-                        <ul className="flex flex-col gap-3 fixed inset-0 p-4 bg-white text-center">
+                        <ul className="flex flex-col gap-3 fixed z-20 inset-0 p-4 grow bg-white text-center">
                             <li className="flex justify-end mb-20">
                                 <button onClick={toggleDropdown}><XMarkIcon className="w-8 h-8" /></button>
                             </li>

@@ -4,6 +4,8 @@ import EstimateBalance from "./balance"
 import UserDetails from "./userDetails"
 import CTADeposit from '../components/ctaDeposit'
 
+import MarketWidget from "@/components/tradeview_widgets/MarketWidget";
+
 const MainTab = () => {
 
     function classNames(...classes: string[]) {
@@ -14,12 +16,16 @@ const MainTab = () => {
             <section className="grow">
                 <UserDetails />
                 <section className="flex">
-                    <div className="md:w-[50%]">
+                    <div className="md:w-[60%]">
                         <EstimateBalance />
                         <CTADeposit />
                     </div>
 
                 </section>
+                <div className="p-4">
+                    <MarketWidget />
+                </div>
+
             </section>
         </>
     )

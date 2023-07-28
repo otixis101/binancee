@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
+import { BrowserRouter } from 'react-router-dom'
 
 const main_font = Roboto({
   subsets: ['latin'],

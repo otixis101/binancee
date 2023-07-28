@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import Navbar from './containers/Navbar'
-import Sidebar from './componenets/Sidebar'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 import MainTab from './containers/MainTab'
 
 export const metadata: Metadata = {

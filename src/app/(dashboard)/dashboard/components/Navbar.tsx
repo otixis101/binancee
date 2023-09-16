@@ -28,7 +28,7 @@ const Navbar = () => {
                 <li className="hidden md:flex hover:text-primary-dark"><Link href={"/wallet"}>Wallet</Link></li>
                 <li className="relative hidden md:flex flex-col items-end">
                     <UserCircleIcon className="w-8 h-8 hover:text-primary-light peer" />
-                    <ul className="hidden flex-col mt-12 absolute shadow-lg rounded-md peer-hover:flex border border-gray-100 text-gray-500">
+                    <ul className="hidden flex-col mt-12 absolute shadow-lg rounded-md peer-hover:flex border border-gray-100 text-gray-500 bg-white">
                         <li className="flex flex-col gap-3 py-4 px-8">
                             <h2 className="text-xl font-bold">Pr***@gmail.com</h2>
                             <ul className="flex gap-4">
@@ -53,7 +53,7 @@ const Navbar = () => {
                             <li className="flex justify-end mb-20">
                                 <button onClick={toggleProfile}><XMarkIcon className="w-8 h-8" /></button>
                             </li>
-                            <li className="flex flex-col gap-3 py-4 px-8">
+                            <li className="flex flex-col gap-3 py-4 px-8 bg-white">
                                 <h2 className="text-xl font-bold">Pr***@gmail.com</h2>
                                 <ul className="flex gap-4 justify-center">
                                     <li className="flex whitespace-nowrap bg-green-200 text-xs py-1 px-2 rounded-full"><CheckBadgeIcon className="w-4 h-4 text-green-500" />Verified</li>

@@ -10,7 +10,7 @@ const popular_crypt = () => {
             </div>
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl font-semibold">Sign Up now to build your own portfolio for free</h1>
-                <Link href={'/register'} className="px-16 py-3 font-semibold rounded-md bg-primary-light w-fit">Get Started</Link>
+                <Link href={'/signin'} className="px-16 py-3 font-semibold rounded-md bg-primary-light w-fit">Get Started</Link>
             </div>
         </section>
     )

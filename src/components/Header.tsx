@@ -4,7 +4,19 @@ import Link from "next/link"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import { useState } from "react";
 
+import { useSession } from 'next-auth/react'
+import { redirect, useRouter } from "next/navigation"
+
 const Header = () => {
+
+    const { data: session } = useSession();
+
+    const router = useRouter()
+
+    if (session && session.user) {
+        redirect('/dashboard')
+    }
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {

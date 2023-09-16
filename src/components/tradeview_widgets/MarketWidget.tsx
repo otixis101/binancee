@@ -18,10 +18,15 @@ const NewsWidget = () => {
             "isTransparent": true
         });
 
-        document.getElementById('market-widget-container')!.appendChild(script);
+        const container = document.getElementById('market-widget-container');
+
+        container!.appendChild(script);
 
         return () => {
-            document.getElementById('market-widget-container')?.removeChild(script);
+            if (container && script && container.contains(script))
+            {
+                container?.removeChild(script);
+            }
         };
     }, []);
 

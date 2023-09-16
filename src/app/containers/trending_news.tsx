@@ -15,7 +15,7 @@ const Trending_Crypt = () => {
                 <div className="flex flex-col gap-4 px-8 rounded-lg py-4 justify-center bg-gray-100">
                     <Image alt="explore illustration" src={exploreIllust} className="" />
                     <h1 className="text-2xl font-bold">World&#39;s Largest Crypto<br /> Community.</h1>
-                    <Link href={'/register'} className="p-4 bg-primary-light font-semibold text-center rounded-md">Explore Now</Link>
+                    <Link href={'/signin'} className="p-4 bg-primary-light font-semibold text-center rounded-md">Explore Now</Link>
                 </div>
 
 

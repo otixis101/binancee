@@ -41,7 +41,7 @@ const trusted = () => {
                         </div>
                     </li>
 
-                    <Link href={'/register'} className="px-16 py-3 font-semibold rounded-md bg-primary-light w-fit">Get Started</Link>
+                    <Link href={'/signin'} className="px-16 py-3 font-semibold rounded-md bg-primary-light w-fit">Get Started</Link>
 
                 </ul>
                 <div className="grow shrink-0 basis-1/2 lg:flex flex-col p-8 hidden">

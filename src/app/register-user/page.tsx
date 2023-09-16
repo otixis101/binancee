@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/blankHeader'
 import RegisterUser from './containers/registerUser'
+import SignupTemplate from './component/SignupTemplate'
 
 
 export const metadata: Metadata = {
@@ -11,10 +12,7 @@ export const metadata: Metadata = {
 export default function Register_User() {
   return (
     <>
-      <div className='flex flex-col h-[100vh]'>
-        <Header />
-        <RegisterUser />
-      </div>
+      <SignupTemplate />
     </>
   )
 }

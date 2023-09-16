@@ -5,6 +5,7 @@ import UserDetails from "./userDetails"
 import CTADeposit from '../components/ctaDeposit'
 
 import MarketWidget from "@/components/tradeview_widgets/MarketWidget";
+import InvestmentTab from "./investmentTab";
 
 const MainTab = () => {
 
@@ -15,10 +16,13 @@ const MainTab = () => {
         <>
             <section className="grow">
                 <UserDetails />
-                <section className="flex">
-                    <div className="md:w-[60%]">
+                <section className="flex flex-wrap">
+                    <div className="md:w-[60%] w-full">
                         <EstimateBalance />
                         <CTADeposit />
+                    </div>
+                    <div className="md:w-[40%] w-full">
+                        <InvestmentTab />
                     </div>
 
                 </section>

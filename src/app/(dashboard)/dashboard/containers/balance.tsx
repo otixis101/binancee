@@ -56,7 +56,7 @@ const Balance = () => {
                         <h1 className="text-gray-500">$0.00</h1>
                     </div>
                 </div>
-                <small className="text-xs text-gray-400">Your account does not currently have any assets, complete identity verification in order to make deposits to your account.</small>
+                <small className="text-sm text-gray-400">Your account does not currently have any assets, complete identity verification in order to make deposits to your account.</small>
 
             </section>
         </>

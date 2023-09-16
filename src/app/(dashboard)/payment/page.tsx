@@ -8,11 +8,6 @@ import { useState } from 'react'
 import { Tab } from '@headlessui/react'
 
 
-export const metadata: Metadata = {
-    title: 'Payment Page | Binancee',
-    description: 'Payment page or Binancee',
-}
-
 function classNames(...classes: any) {
     return classes.filter(Boolean).join(' ')
 }

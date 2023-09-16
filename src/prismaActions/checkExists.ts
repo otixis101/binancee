@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 const prisma = new PrismaClient()
 
 export async function checkExists(userData: any) {
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await prisma.logUser.findUnique({
         where:{
             email: userData.email
         }

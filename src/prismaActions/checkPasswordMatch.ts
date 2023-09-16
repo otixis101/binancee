@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 export async function checkPasswordMacth(userData: any) {
-    const getUser = await prisma.user.findUnique({
+    const getUser = await prisma.logUser.findUnique({
         where:{
             email: userData.email
         }

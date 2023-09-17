@@ -27,10 +27,16 @@ const logInSchema = z.object({
 import { FieldValues, useForm } from "react-hook-form"
 import { checkPasswordMacth } from "@/prismaActions/checkPasswordMatch"
 import { checkExists } from "@/prismaActions/checkExists"
+import { useState } from "react"
 
 const LoginForm = () => {
 
     const { toast } = useToast()
+
+    const [getError, setError] = useState({
+        is: false,
+        content: '',
+    })
 
     const { data: session } = useSession();
 
@@ -45,45 +51,62 @@ const LoginForm = () => {
     })
 
     const onSubmit = async (data: FieldValues) => {
+        const result = await signIn('credentials', { ...data, redirect: false });
+
+        console.log(result);
+        if (result && result?.error) {
+            setError({
+                is: true,
+                content: result?.error
+            }
+            );
+        }
         // TODO: submit to server
         // ...
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-        //check if email exist
-        await checkExists(data).then(async (res) => {
-            if (res?.message) {
-                await checkPasswordMacth(data).then((res) => {
-                    if (res?.message) {
-                        toast({
-                            variant: "destructive",
-                            title: "Error Message:",
-                            description: res?.message,
-                        })
-                    }
-                    else {
-                        toast({
-                            title: "Message:",
-                            description: "Logged In Successfully",
-                        })
-                        router.push('/dashboard')
-                    }
-                })
-            }
-            else {
-                toast({
-                    variant: "destructive",
-                    title: "Error Message:",
-                    description: "User does not exist",
-                })
+        // //check if email exist
+        // await checkExists(data).then(async (res) => {
+        //     if (res?.message) {
+        //         await checkPasswordMacth(data).then((res) => {
+        //             if (res?.message) {
+        //                 toast({
+        //                     variant: "destructive",
+        //                     title: "Error Message:",
+        //                     description: res?.message,
+        //                 })
+        //             }
+        //             else {
+        //                 toast({
+        //                     title: "Message:",
+        //                     description: "Logged In Successfully",
+        //                 })
+        //                 signIn('credentials', { ...data, redirect: false });
+        //                 // router.push('/dashboard')
+        //             }
+        //         })
+        //     }
+        //     else {
+        //         toast({
+        //             variant: "destructive",
+        //             title: "Error Message:",
+        //             description: "User does not exist",
+        //         })
 
-            }
+        //     }
 
-        })
+        // })
     }
 
     if (session && session.user) {
 
         redirect('/dashboard')
+        // return (
+        //     <div className="flex flex-col grow justify-center px-8 items-center">
+        //         <h1>Logged in Successfully</h1>
+
+        //     </div>
+        // )
     }
     else {
         return (
@@ -96,19 +119,18 @@ const LoginForm = () => {
                             <input
                                 {...register("email")}
                                 type="email" id="email" className="border outline-0 px-2 py-3 rounded-sm focus:border-primary-dark" />
-                            {errors.email &&
-                                <small className="text-red-500">{`${errors.email.message}`}</small>
-                            }
+
                         </div>
                         <div className="flex flex-col gap-2">
                             <label htmlFor="password" className="text-sm text-slate-500">Password</label>
                             <input
                                 {...register("password")}
                                 type="password" id="password" className="border outline-0 px-2 py-3 rounded-sm focus:border-primary-dark" />
-                            {errors.password &&
-                                <small className="text-red-500">{`${errors.password.message}`}</small>
-                            }
+
                         </div>
+                        {getError.is &&
+                            <small className="text-red-500">{`${getError.content}`}</small>
+                        }
                         <button type="submit" className="flex items-center justify-center gap-4 bg-primary-light disabled:bg-primary-light/50 p-4 font-semibold rounded-md" disabled={isSubmitting}>
 
                             {isSubmitting ?
@@ -117,6 +139,7 @@ const LoginForm = () => {
                                 'Submit'
                             }
                         </button>
+
                     </form>
                     <div className='flex flex-col gap-4 w-full justify-center'>
 

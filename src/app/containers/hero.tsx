@@ -12,13 +12,13 @@ const Hero = () => {
                 <li className="flex flex-col gap-10 grow basis-[52%]">
                     <h2 className="text-3xl md:text-5xl font-bold leading-tight">Deposit, hodl, Invest and Leverage 350+ cryptocurrencies on Binance<span className='text-2xl text-amber-300'>VIP</span></h2>
                     <div className='flex flex-col gap-4 w-full lg:w-[80%]'>
-                        <Link href={'/signin'} className="flex items-center justify-center gap-4 bg-primary-light p-4 font-semibold rounded-md"><UserIcon className="w-6 h-6" /> Sign up with Email or Phone</Link>
+                        <Link href={'/login'} className="flex items-center justify-center gap-4 bg-primary-light p-4 font-semibold rounded-md"><UserIcon className="w-6 h-6" /> Sign up with Email or Phone</Link>
                         <div className='flex flex-row items-center gap-4'>
                             <span className='border-slate-900/10 border-t border-b grow'></span>
                             <p className=''>or continue with</p>
                             <span className='border-teal-900/10 border-t border-b grow'></span>
                         </div>
-                        <Link href={'/signin'} className="flex justify-center gap-4 bg-gray-200 p-4 font-semibold rounded-md"> <Image src={googleImage} alt="hero_image" className='w-6 h-6' />  Google</Link>
+                        <Link href={'/login'} className="flex justify-center gap-4 bg-gray-200 p-4 font-semibold rounded-md"> <Image src={googleImage} alt="hero_image" className='w-6 h-6' />  Google</Link>
 
                     </div>
                 </li>

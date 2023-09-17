@@ -28,9 +28,9 @@ const Header = () => {
                 <li className="font-bold text-primary-dark text-xl"><Link href={"/"}>BINANCE<span className="text-xs font=bold text-slate-900">VIP</span></Link></li>
             </ul>
             <ul className="px-4 py-4 flex justify-end gap-4 md:justify-between text-sm w-full md:w-[50%] items-center">
-                <li className="hidden md:flex hover:text-primary-dark"><Link href={"/pricing"}>Pricing</Link></li>
-                <li className="hidden md:flex hover:text-primary-dark"><Link href={"/about"}>About</Link></li>
-                <li className="hidden md:flex hover:text-primary-dark"><Link href={"/faq"}>FAQs</Link></li>
+                {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"/pricing"}>Pricing</Link></li> */}
+                {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"/about"}>About</Link></li> */}
+                <li className="hidden md:flex hover:text-primary-dark"><Link href={"#"}>FAQs</Link></li>
                 <li className="flex items-center gap-6">
                     <Link className="hidden md:flex hover:text-primary-dark" href={"/login"}>Log In</Link>
                     <Link className="py-2 px-3 bg-primary-light hover:bg-primary/50 rounded" href={"/register"}>Register</Link>
@@ -47,8 +47,8 @@ const Header = () => {
                             </li>
                             <li className="w-full p-3"><Link href={"/login"}>Log In</Link></li>
                             <li className="p-3 bg-primary-light hover:bg-primary/50 rounded"><Link href={"/register"}>Register</Link></li>
-                            <li className="p-3 hover:text-primary-dark"><Link href={"/pricing"}>Pricing</Link></li>
-                            <li className="p-3 hover:text-primary-dark"><Link href={"/about"}>About</Link></li>
+                            {/* <li className="p-3 hover:text-primary-dark"><Link href={"/pricing"}>Pricing</Link></li> */}
+                            {/* <li className="p-3 hover:text-primary-dark"><Link href={"/about"}>About</Link></li> */}
                             <li className="p-3 hover:text-primary-dark"><Link href={"/faq"}>FAQs</Link></li>
                         </ul>
                     )}

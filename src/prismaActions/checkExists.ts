@@ -1,13 +1,12 @@
 "use server"
 
-import { PrismaClient } from '@prisma/client'
+import { db } from "@/lib/db";
 import { NextResponse } from 'next/server';
 
 
-const prisma = new PrismaClient()
 
 export async function checkExists(userData: any) {
-    const existingUser = await prisma.logUser.findUnique({
+    const existingUser = await db.user.findUnique({
         where:{
             email: userData.email
         }

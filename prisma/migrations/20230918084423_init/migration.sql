@@ -1,13 +1,15 @@
 -- CreateTable
-CREATE TABLE "LogUser" (
+CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
     "image" TEXT,
     "password" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "LogUser_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -39,17 +41,6 @@ CREATE TABLE "Session" (
 );
 
 -- CreateTable
-CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-    "name" TEXT,
-    "email" TEXT,
-    "emailVerified" TIMESTAMP(3),
-    "image" TEXT,
-
-    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "VerificationToken" (
     "identifier" TEXT NOT NULL,
     "token" TEXT NOT NULL,
@@ -57,16 +48,13 @@ CREATE TABLE "VerificationToken" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "LogUser_email_key" ON "LogUser"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "VerificationToken_token_key" ON "VerificationToken"("token");

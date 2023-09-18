@@ -12,7 +12,7 @@ export async function POST(req: Request){
         const {email, password} = body;
 
         //check if user exist
-        const existingUser = await db.logUser.findUnique({
+        const existingUser = await db.user.findUnique({
             where:{
                 email: email
             }
@@ -25,9 +25,9 @@ export async function POST(req: Request){
         //hash user password
         const hashedPassword = await hash(password, 10)
         //create new user
-        const newUser = await db.logUser.create({
+        const newUser = await db.user.create({
             data:{
-                email,
+                email: email,
                 password: hashedPassword
             }
         })
@@ -39,6 +39,6 @@ export async function POST(req: Request){
     }
     catch(error)
     {
-        return NextResponse.json({message: "something went wrong"}, {status: 500})
+        return NextResponse.json({message: "something went wrong"}, {status: 501})
     }
 }

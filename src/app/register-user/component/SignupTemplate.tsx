@@ -1,11 +1,11 @@
 "use client"
 
 import Link from 'next/link'
-
+import axios from 'axios'
 import { FormEvent, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { z } from 'zod'
+import { useToast } from "@/components/ui/use-toast"
 
 import { createUser } from '@/prismaActions/createUser'
 
@@ -21,6 +21,7 @@ import Step3 from './step3';
 
 const SignupTemplate = () => {
     const router = useRouter();
+    const { toast } = useToast()
 
     const [getSubmitting, setSubmitting] = useState(false)
 
@@ -45,10 +46,32 @@ const SignupTemplate = () => {
     const handleSubmit = async () => {
         setSubmitting(true)
 
-        await createUser(getUserForm).then((res) => {
-            router.push('./register-complete')
-            setSubmitting(false);
-        })
+        axios.post('/api/regUser', getUserForm,)
+            .then((res) => {
+                toast({
+                    title: "Success Message",
+                    description: "User Has been created succcesfully",
+                })
+                router.push('./register-complete')
+                setSubmitting(false);
+            })
+            .catch((res) => {
+                toast({
+                    variant: "destructive",
+                    title: "Error Message",
+                    description: "Something went wrong! try again later",
+                })
+                setSubmitting(false);
+            })
+
+        // await createUser(getUserForm).then((res) => {
+        //     alert('user has been registered')
+        //     // router.push('./register-complete')
+        //     setSubmitting(false);
+        // }).catch((res) => {
+        //     alert(res)
+        //     setSubmitting(false);
+        // })
 
     }
 

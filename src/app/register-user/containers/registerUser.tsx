@@ -9,6 +9,8 @@ import { FieldValues, useForm } from "react-hook-form"
 
 import { useToast } from "@/components/ui/use-toast"
 
+import 'animate.css';
+
 
 
 const emailSchema = z.object({
@@ -61,12 +63,12 @@ const RegisterUser = ({ onStageChange, onFormUpdate }: stageProp) => {
                 <h1 className="text-3xl font-bold text-left w-full mb-4">Create New Account</h1>
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col gap-2">
-                        <label htmlFor="email" className="text-sm text-slate-500">Email / Username</label>
+                        <label htmlFor="email" className="text-sm text-slate-500">Email</label>
                         <input
                             {...register("email")}
                             type="email" id="email" onChange={(e) => onFormUpdate('email', e.target.value)} className="border outline-0 px-2 py-3 rounded-sm focus:border-primary-dark" />
                         {errors.email &&
-                            <small className="text-red-500">{`${errors.email.message}`}</small>
+                            <small className="text-red-500 animate__animated animate__headShake">{`${errors.email.message}`}</small>
                         }
                     </div>
                     <div className="flex flex-col gap-2">

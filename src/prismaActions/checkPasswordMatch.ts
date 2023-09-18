@@ -1,12 +1,11 @@
 "use server"
 
 import {hash,compare} from 'bcrypt'
-import { PrismaClient } from '@prisma/client'
+import { db } from "@/lib/db";
 
-const prisma = new PrismaClient()
 
 export async function checkPasswordMacth(userData: any) {
-    const getUser = await prisma.logUser.findUnique({
+    const getUser = await db.user.findUnique({
         where:{
             email: userData.email
         }

@@ -8,7 +8,7 @@ const userDetails = () => {
     return (
         <>
             <nav className='bg-gray-50'>
-                <ul className='flex py-6 gap-12 items-center flex-wrap'>
+                <ul className='flex py-6 gap-4 md:gap-12 justify-between items-center flex-wrap'>
                     <li className='md:border-r md:border-gray-200 border-0 px-8'>
                         <div className="flex gap-4 items-center">
                             <Image src={profile} alt='' />

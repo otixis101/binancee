@@ -4,11 +4,14 @@ import Link from "next/link"
 import Image from "next/image"
 import googleImage from "@/assets/icons8-google.svg"
 import { UserIcon } from "@heroicons/react/24/solid"
+import { useRouter } from "next/navigation"
 
 
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 const RegisterForm = () => {
+
+    const router = useRouter();
 
     const { data: session } = useSession();
 
@@ -18,13 +21,14 @@ const RegisterForm = () => {
 
             <div className="flex flex-col grow justify-center px-8 items-center">
                 <div className="flex flex-col gap-8 w-full md:w-[460px] ">
-                    <h1 className="text-2xl md:text-3xl font-bold mb-2 text-center">Logged In to Binancee!</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold mb-2 text-center">Logged In to Binance<small className="text-sm text-primary-dark">VIP</small></h1>
                     <div className='flex flex-col gap-1 w-full items-center justify-center'>
                         <Image src={session.user.image || ''} alt="user image" className="mb-4 w-16 h-16 rounded-full" width={40} height={40} />
                         <h1>Hello, {session.user.name}</h1>
                         <small className="text-sm text-gray-500 font-light">{session.user.email}</small>
 
-                        <button onClick={() => signOut()} className="mt-6 flex justify-center items-center bg-gray-200 cursor-pointer gap-4 px-8 py-2 font-semibold text-sm rounded-md"> Sign Out</button>
+                        <button onClick={() => router.push('/dashboard')} className="mt-6 flex justify-center items-center bg-primary-light cursor-pointer gap-4 px-8 py-2 font-semibold text-sm rounded-md"> Go to Dashboard</button>
+                        <button onClick={() => signOut()} className="mt-2 flex justify-center items-center bg-gray-200 cursor-pointer gap-4 px-8 py-2 font-semibold text-sm rounded-md"> Sign Out</button>
                     </div>
                 </div>
 
@@ -36,7 +40,7 @@ const RegisterForm = () => {
 
             <div className="flex flex-col grow justify-center px-8 items-center">
                 <div className="flex flex-col gap-8 w-full md:w-[460px] ">
-                    <h1 className="text-2xl md:text-3xl font-bold mb-2 text-center">Welcome to Binancee!</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold mb-2 text-center">Welcome to Binance<small className="text-sm text-primary-dark">VIP</small></h1>
                     <div className='flex flex-col gap-4 w-full justify-center'>
                         <Link href={'/register-user'} className="flex items-center justify-center gap-4 bg-primary-light p-4 font-semibold text-sm rounded-md"><UserIcon className="w-5 h-5" /> Sign up with Email or Phone</Link>
 

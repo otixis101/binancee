@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/db";
+import { db } from "@/lib/db";
 import { compare } from "bcrypt";
 import { boolean } from "zod";
 
@@ -20,7 +20,7 @@ export async function validateUser(credentials: any) {
             const { email, password } = credentials;
 
             // Check if a user with the provided email exists in the database
-            const user = await prisma.logUser.findUnique({
+            const user = await db.user.findUnique({
                 where: { email },
             })
 
@@ -39,7 +39,7 @@ export async function validateUser(credentials: any) {
             }
 
             // const { password, ...rest } = credentials;
-            console.log(credentials)
+            // console.log(credentials)
             return Promise.resolve(credentials);
         }
         else {

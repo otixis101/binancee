@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import iconDeposit from '@/assets/deposit.png'
 import iconReceive from '@/assets/receive.png'
+import iconUser from '@/assets/user.svg'
 
 import { useSession, signOut } from 'next-auth/react'
 import { redirect, useRouter } from "next/navigation"
@@ -109,15 +110,15 @@ const Navbar = () => {
                     <Popover>
                         <PopoverTrigger>
                             {
-                                session ?
-                                (
-                                    <Image src={session?.user?.image || ''} alt="user image" className="w-8 h-8 rounded-full" width={50} height={50} />
-                                )
-                                :
-                                (
+                                session?.user?.image ?
+                                    (
+                                        <Image src={session?.user?.image} alt="user image" className="w-8 h-8 rounded-full" width={50} height={50} />
+                                    )
+                                    :
+                                    (
 
-                                    <UserCircleIcon className="w-8 h-8" />
-                                )
+                                        <UserCircleIcon className="w-8 h-8 rounded-full" />
+                                    )
                             }
                         </PopoverTrigger>
                         <PopoverContent align="end" className="flex flex-col shadow-lg rounded-md border border-gray-100 text-gray-500 bg-white p-0 min-w-fit">

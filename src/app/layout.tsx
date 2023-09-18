@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 
 import { getServerSession } from "next-auth";
 
-import SessionProvider from "./context/Provider";
+import SessionProvider from "@/context/Provider";
 
 import { Toaster } from "@/components/ui/toaster"
 

@@ -46,7 +46,7 @@ const SignupTemplate = () => {
     const handleSubmit = async () => {
         setSubmitting(true)
 
-        axios.post('/api/regUser', getUserForm,)
+        axios.post('/api/create-user', getUserForm,)
             .then((res) => {
                 toast({
                     title: "Success Message",

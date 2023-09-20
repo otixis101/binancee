@@ -35,7 +35,20 @@ export async function POST(req: Request){
         const {password: newUserPassword, ...rest} = newUser;
 
 
-        return NextResponse.json({user: rest, message: 'user created successfullyy'}, {status : 201})
+        //Create Asset related to this user
+        const newAsset = await db.asset.create({
+            data:{
+                symbol: '$',
+                name: 'usd',
+                balance: 0,
+                ownerId: newUser.id,
+            }
+        })
+
+        return NextResponse.json({user: rest, message: 'user created successfully'}, {status : 201})
+
+
+
     }
     catch(error)
     {

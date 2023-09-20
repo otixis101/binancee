@@ -4,8 +4,8 @@ import RegisterForm from '@/components/registerForm'
 
 
 export const metadata: Metadata = {
-  title: 'Binancee | Register new Account',
-  description: 'SignUp Page for Binancee',
+  title: 'BinanceVIP | Register new Account',
+  description: 'SignUp Page for Binance',
 }
 
 export default function Register() {

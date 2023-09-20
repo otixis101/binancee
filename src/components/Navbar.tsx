@@ -64,7 +64,8 @@ const Navbar = () => {
                 <li>
                     <Sheet>
                         <SheetTrigger className="py-2 px-3 bg-primary-light hover:bg-primary/80 rounded flex gap-2">
-                            <ArrowDownTrayIcon className="w-4 h-4" />  Deposit</SheetTrigger>
+                            <ArrowDownTrayIcon className="w-4 h-4" />  Deposit
+                            </SheetTrigger>
                         <SheetContent className=" data-[state=open]:w-full max-w-full">
                             <SheetHeader className="text-left">
                                 <SheetTitle>
@@ -94,7 +95,7 @@ const Navbar = () => {
                                             <Image src={iconReceive} alt="icon" className="w-12 h-12" />
                                             <div className="flex flex-col gap-0">
                                                 <h1 className="text-base text-black font-semibold">Buy Crypto</h1>
-                                                <small className="text-sm">Get the deposit address for BTC, ETH, or any other crypto and deposit via the blockchain.</small>
+                                                <small className="text-sm">Buy crypto directly with cash, hassle-free and suggested for new users.</small>
                                             </div>
                                             <ChevronRightIcon className="shrink-0 w-5 h-5" />
                                         </Link>

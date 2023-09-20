@@ -13,7 +13,7 @@ const InvestmentTab = () => {
                         <p className="text-base md:text-xl font-medium">You can start your Binancee investing journey now</p>
                         {/* <p className="text-base md:text-xl font-medium">Calculate ROI</p> */}
                         {/* <small className='text-gray-500'>Recommended entry-level features for beginners.</small> */}
-                        <div className='flex shrink-0 gap-2'>
+                        <div className='flex shrink-0 justify-between gap-2'>
                             <div className='flex items-center border-b border-dashed border-gray-300 focus-within:border-primary-light px-2'>
                                 <span className="text-sm text-gray-600">USD</span>
                                 <input type="text" className='text-gray-700 py-0 px-0 w-full border-0 text-lg outline-0 bg-transparent text-right' />

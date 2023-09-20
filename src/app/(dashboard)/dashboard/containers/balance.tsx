@@ -2,9 +2,10 @@
 
 import { CheckIcon, ChevronDownIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid"
 import { Menu, Listbox } from "@headlessui/react"
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
-
+import { useSession } from 'next-auth/react'
+import axios from "axios"
 
 const cryptos = [
     { id: 1, name: 'BTC' },
@@ -13,12 +14,39 @@ const cryptos = [
     { id: 4, name: 'BNB' },
 ]
 
+type tAsset = {
+    id: string;
+    symbol: string;
+    name: string;
+    balance: number;
+    createdAt: string;
+    ownerId: string;
+}
+
 const Balance = () => {
     const [selectedPerson, setSelectedPerson] = useState(cryptos[0])
 
+    const { data: session } = useSession();
+
+    const [Asset, setAsset] = useState<tAsset>()
+
+    const getAsset = async () => {
+        await axios.post('/api/get-asset', {
+            email: session?.user?.email
+        }).then((res) => setAsset(res.data));
+    }
+
+
+    useEffect(() => {
+        getAsset()
+    }, [])
+
+
+
+    // const {balance} = asset
+
     return (
         <>
-
             <section className="px-6 py-8 flex flex-col gap-3">
                 <div>
                     <p className="flex gap-2 items-center font-semibold text-lg">Estimated Balance
@@ -53,7 +81,12 @@ const Balance = () => {
                     </div>
                     <div className="flex gap-2 ml-2">
                         <p>=</p>
-                        <h1 className="text-gray-500">$0.00</h1>
+                        <h1 className="text-gray-500"> {
+                            Asset ?
+                                Asset?.symbol + "" + Asset?.balance
+                                : '$0.00'
+                        }
+                        </h1>
                     </div>
                 </div>
                 <small className="text-sm text-gray-400">Your account does not currently have any assets, complete identity verification in order to make deposits to your account.</small>

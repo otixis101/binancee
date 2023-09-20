@@ -4,7 +4,7 @@ import LoginForm from '@/components/loginForm'
 
 
 export const metadata: Metadata = {
-  title: 'Binancee | Log in to Account',
+  title: 'BinanceVIP | Log in to Account',
   description: 'Login Page for Binancee',
 }
 

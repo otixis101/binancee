@@ -1,11 +1,11 @@
 "use client"
 
 import EstimateBalance from "./balance"
-import UserDetails from "./userDetails"
 
 import MarketWidget from "@/components/tradeview_widgets/MarketWidget";
 import InvestmentTab from "./investmentTab";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const MainTab = () => {
 
@@ -14,14 +14,18 @@ const MainTab = () => {
     }
     return (
         <>
-            <section className="grow">
-                <nav className='bg-gray-50 px-8 py-8'>
+            <section className="grow flex flex-col w-full">
+                <nav className='bg-gray-50 px-8 py-8 flex flex-wrap justify-between gap-4 '>
                     <h1 className="text-3xl font-semibold">Wallet Overview</h1>
+                    <div className="flex gap-4 flex-wrap">
+                        <Link href={'/deposit'} className="py-2 px-6 font-medium bg-primary-light hover:bg-primary/80 text-sm rounded flex gap-2">Deposit</Link>
+                        <Link href={'/withdrawal'} className="py-2 px-6 font-medium bg-gray-200 hover:bg-gray-300 text-sm rounded flex gap-2">Withdraw</Link>
+                    </div>
                 </nav>
-                <section className="flex p-4">
+                <section className="flex flex-col lg:flex-row p-4 gap-4">
                     <div className="md:w-[60%] w-full shrink-0">
                         <EstimateBalance />
-                        <div className="px-6 py-8 flex flex-col gap-6">
+                        <div className="px-3 py-8 flex flex-col gap-6">
                             <h1>My Assets</h1>
                             <div className="relative overflow-x-auto">
                                 <table className="w-full text-sm text-left text-gray-500 ">
@@ -77,11 +81,10 @@ const MainTab = () => {
                         </div>
                     </div>
 
-                    <div className="md:w-[40%] shrink-0 flex flex-col gap-6">
+                    <div className="w-full md:w-[40%] shrink-0 flex flex-col p-4 gap-6">
                         <div className="flex justify-between items-center">
-                            <p className="font-medium">Recent Transactions</p>
+                            <p className="font-semibold">Recent Transactions</p>
                             <Link href={''} className="px-2 py-1 font-medium bg-gray-100 hover:bg-gray-200 text-xs">View All</Link>
-
                         </div>
                         <div className="flex flex-col">
                             <div className="relative overflow-x-auto">

@@ -1,7 +1,7 @@
 "use client"
 
 import { Cog8ToothIcon } from "@heroicons/react/24/outline"
-import { BanknotesIcon, Cog6ToothIcon, IdentificationIcon, ShieldCheckIcon, ShieldExclamationIcon, UserIcon } from "@heroicons/react/24/solid"
+import { BanknotesIcon, Cog6ToothIcon, IdentificationIcon, ShieldCheckIcon, ShieldExclamationIcon, UserIcon, WalletIcon } from "@heroicons/react/24/solid"
 import { LayoutDashboardIcon } from "lucide-react"
 import Link from "next/link"
 
@@ -19,7 +19,7 @@ const Sidebar = () => {
 
 
     return (
-        <nav className="hidden lg:flex flex-col min-w-[18%] w-[18%] shrink-0 border-r border-gray-200 text-gray-500">
+        <nav className="hidden lg:flex flex-col min-w-[15%] w-[15%] shrink-0 border-r border-gray-200 text-gray-500">
             <ul className="text-base">
                 <li>
                     <Link href={'/dashboard'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
@@ -46,11 +46,11 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href={'/payment'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
-                        pathname.includes('/payment') && "bg-gray-100 border-primary-dark"
+                    <Link href={'/wallet'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
+                        pathname.includes('/wallet') && "bg-gray-100 border-primary-dark"
                     )}>
-                        <BanknotesIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
-                        <div className="group-hover:text-gray-800 group-hover:font-medium">Payment</div>
+                        <WalletIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
+                        <div className="group-hover:text-gray-800 group-hover:font-medium">Wallet</div>
                     </Link>
                 </li>
                 <li>

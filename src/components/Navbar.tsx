@@ -56,11 +56,11 @@ const Navbar = () => {
     };
     return (
         <nav className="flex justify-between items-center md:px-4 bg-white">
-            <ul className="px-4 py-5">
+            <ul className="px-4 py-4">
                 <li className="font-bold text-primary-dark text-xl"><Link href={"/"}>BINANCE<span className="text-xs font=bold text-slate-900">VIP</span></Link></li>
             </ul>
             <ul className="flex justify-end pr-2 md:pr-0 gap-4 md:gap-8 md:justify-end text-sm w-full items-center">
-                <li className="hidden md:flex hover:text-primary-dark"><Link href={"/buy"}>Buy Crypto</Link></li>
+                {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"/buy"}>Buy Crypto</Link></li> */}
                 <li>
                     <Sheet>
                         <SheetTrigger className="py-2 px-3 bg-primary-light hover:bg-primary/80 rounded flex gap-2">

@@ -24,6 +24,19 @@ export async function POST(req: Request){
       },
     })
 
+    if(!asset)
+    {
+      //create asset for user
+      await db.asset.create({
+        data:{
+          symbol: '$',
+          name: 'usd',
+          balance: 0.00,
+          ownerId: user?.id,
+        }
+      });
+    }
+
     return NextResponse.json(asset,{status: 201});
   } catch (error) {
     return NextResponse.json({message:'Something went wrong!'}, {status: 501});

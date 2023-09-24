@@ -33,7 +33,7 @@ export async function POST(req: Request){
             data: {
               assetId: asset.id,
               amount: amount,
-              type: "INVESTMENT",
+              type: "INVEST",
               userId: userId,
             }
           }).catch((err) => {

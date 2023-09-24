@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/blankHeader'
-import GoBack from '@/components/goBack'
 import EmailVerify from '../containers/emailVerification'
+import GoBack from '../containers/goBack';
 
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function Step2({ onStageChange }: stageProp) {
     <>
       <div className='flex flex-col h-[100vh]'>
         <Header />
-        <GoBack />
+        <GoBack onStageChange={onStageChange}/>
         <EmailVerify onStageChange={onStageChange} />
       </div>
     </>

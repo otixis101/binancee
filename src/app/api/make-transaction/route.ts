@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 enum TransactionType {
   DEPOSIT = 'DEPOSIT',
   WITHDRAWAL = 'WITHDRAWAL',
-  INVESTMENT = 'INVESTMENT',
+  INVESTMENT = 'INVEST'
 }
 
 
@@ -30,29 +30,29 @@ export async function POST(req: Request){
     if(asset){
 
       
-
-      
       //Update asset balance based on the transaction type
-      if (transactionType === TransactionType.DEPOSIT) {
-        asset.balance += amount;
-      } else if (transactionType === TransactionType.WITHDRAWAL) {
-        if (asset.balance >= amount) {
-          asset.balance -= amount;
-        } else {
-          return NextResponse.json({message: 'Insufficient balance for withdrawal'},{status: 202});
-        }
-      }
-      else if(transactionType === TransactionType.INVESTMENT)
-      {
-        if (asset.balance >= amount) {
-          asset.balance -= amount;
-        } else {
-          return NextResponse.json({message: 'Insufficient balance for investment'},{status: 202});
-        }
-      }
+      switch(transactionType){
+        case TransactionType.INVESTMENT:
+            if (asset.balance >= amount) {
+              asset.balance -= amount;
+            } else {
+              return NextResponse.json({message: 'Insufficient balance for investment'},{status: 303});
+            }
+          break;
+          case TransactionType.WITHDRAWAL:
+            if (asset.balance >= amount) {
+              asset.balance -= amount;
+            } else {
+              return NextResponse.json({message: 'Insufficient balance for withdrawal'},{status: 302});
+            }
+
+          break;
+          case TransactionType.DEPOSIT:
+            asset.balance += amount;
+          break;
+      } 
 
       
-
       // Create a new transaction
       const transaction = await db.transaction.create({
         data: {
@@ -65,7 +65,7 @@ export async function POST(req: Request){
 
     }
     else{
-      return NextResponse.json({message:'User has no Assets'},{status: 408});
+      return NextResponse.json({message:'User has no Assets'},{status: 308});
     }
 
 
@@ -77,7 +77,7 @@ export async function POST(req: Request){
 
     return NextResponse.json({message: transactionType + ' Transaction created Successfully!'},{status: 201});
   } catch (error) {
-    return NextResponse.json({message:'Error creating transaction'}, {status: 501});
+    return NextResponse.json({message: error}, {status: 501});
   } 
 
 }

@@ -112,7 +112,7 @@ const MainTab = () => {
                                                 $2999
                                             </td>
                                             <td className="px-4 py-4">
-                                                <span className="px-2 py-1 rounded-full bg-green-200 text-xs">
+                                                <span className="px-2 py-1 rounded-lg bg-green-200 text-xs">
                                                     Success
                                                 </span>
                                             </td>
@@ -126,7 +126,7 @@ const MainTab = () => {
                                                 $187
                                             </td>
                                             <td className="px-4 py-4">
-                                                <span className="px-2 py-1 rounded-full bg-red-200 text-xs">
+                                                <span className="px-2 py-1 rounded-lg bg-red-200 text-xs">
                                                     Failed
                                                 </span>
                                             </td>

@@ -18,28 +18,39 @@ export async function POST(req: Request){
 
     // const {id} = user;
 
-    const asset = await db.asset.findFirst({
-      where:{
-        ownerId: user?.id
-      },
-    })
+    if(user){
+        const asset = await db.asset.findFirst({
+        where:{
+          ownerId: user?.id
+        },
+      })
 
-    if(!asset)
-    {
-      //create asset for user
-      await db.asset.create({
-        data:{
-          symbol: '$',
-          name: 'usd',
-          balance: 0.00,
-          ownerId: user?.id,
-        }
-      });
-    }
+      if(!asset)
+      {
+        console.log('not exists')
+        // return NextResponse.json({message:'Asset Dont Exist'}, {status: 401});
+        //create asset for user
+        const newAsset = await db.asset.create({
+              data:{
+                  symbol: '$',
+                  name: 'usd',
+                  balance: 0.00,
+                  ownerId: user?.id,
+              }
+          })
 
-    return NextResponse.json(asset,{status: 201});
+          return NextResponse.json(newAsset,{status: 201});
+      }
+      else{
+        return NextResponse.json(asset,{status: 201});
+      }
+  }
+  else{
+    throw new Error("user does not exists");
+  }
+
   } catch (error) {
-    return NextResponse.json({message:'Something went wrong!'}, {status: 501});
+    return NextResponse.json({message: 'Something went wrong'}, {status: 501});
   } 
 
 }

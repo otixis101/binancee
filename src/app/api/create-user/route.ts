@@ -40,7 +40,7 @@ export async function POST(req: Request){
             data:{
                 symbol: '$',
                 name: 'usd',
-                balance: 0,
+                balance: 0.00,
                 ownerId: newUser.id,
             }
         })

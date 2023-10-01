@@ -23,7 +23,7 @@ const InvestmentTab = () => {
     const [getResponse, setResponse] = useState({
         isError: false,
         isSuccess: false,
-        content: '',
+        content: "",
     })
 
 
@@ -33,18 +33,21 @@ const InvestmentTab = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
+        setResponse({ isError: false, isSuccess: false, content: '' })
 
         setIsLoading(true)
-        getResponse.isError = false
-        getResponse.isSuccess = false
 
         if ((parseInt(investAmount) < 50 || isNaN(parseInt(investAmount)))) {
-            setResponse({
-                isError: true,
-                isSuccess: false,
-                content: "Amount must be a Number and be atleast $50"
+            setResponse(prevResponse => {
+                return {
+                    isError: true,
+                    isSuccess: false,
+                    content: "Amount must be a Number and be atleast $50"
+                }
             })
-            return
+            setIsLoading(false)
+            alert(getResponse.isError)
+            return null;
         }
 
         const user = await axios.post('/api/get-user', {
@@ -57,6 +60,7 @@ const InvestmentTab = () => {
         // Calculate the date one month from now
         const oneMonthFromNow = new Date(currentDate);
         oneMonthFromNow.setMonth(currentDate.getMonth() + 1);
+        alert(oneMonthFromNow)
 
         await axios.post('/api/make-investment', {
             "userId": user.data.id,
@@ -71,15 +75,15 @@ const InvestmentTab = () => {
                 setResponse({
                     isError: false,
                     isSuccess: true,
-                    content: res.data.message.toString()
+                    content: res.data.message
                 })
             }
             if (res.status > 200 && res.status < 300) {
-                alert("200+ error")
+                alert("200+ error:" + res.data.message)
                 setResponse({
                     isError: true,
                     isSuccess: false,
-                    content: res.data.messaage.toString()
+                    content: res.data.messaage
                 })
             }
         }).catch((error) => {
@@ -128,8 +132,8 @@ const InvestmentTab = () => {
                             <p className='text-gray-700 text-right text-xl'>{`$${invReturn < 0 || isNaN(invReturn) ? 0 : invReturn}`}</p>
                         </div>
                         <button className='px-10 text-sm font-semibold py-3 rounded-md bg-primary-light w-full disabled:bg-primary-light/50' disabled={isLoading}>  {isLoading ? "Setting up..." : "Invest"}</button>
-                        {getResponse.isError == true || getResponse.isSuccess == true &&
-                            <small className={classNames(getResponse.isError ? "text-red-500" : "text-green-500",)}>{`${getResponse.content}`}</small>
+                        {getResponse.isError || getResponse.isSuccess &&
+                            <small className={classNames("ml-auto font-semibold", getResponse.isError ? "text-red-500" : "text-green-500",)}>{`${getResponse.content}`}</small>
                         }
                     </form>
                     {/* <Image src={heroImg} alt="hero-image" className=' md:flex' /> */}

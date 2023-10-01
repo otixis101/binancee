@@ -1,11 +1,12 @@
 import { db } from "@/lib/db";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
 
 enum TransactionType {
-  DEPOSIT = 'DEPOSIT',
-  WITHDRAWAL = 'WITHDRAWAL',
-  INVESTMENT = 'INVEST'
+  INVESTMENT = "INVESTMENT",
+  DEPOSIT = "DEPOSIT",
+  WITHDRAWAL = "WITHDRAWAL",
 }
 
 
@@ -54,7 +55,7 @@ export async function POST(req: Request){
 
       
       // Create a new transaction
-      const transaction = await db.transaction.create({
+      await db.transaction.create({
         data: {
           assetId: asset.id,
           amount: amount,
@@ -75,8 +76,14 @@ export async function POST(req: Request){
       data: { balance: asset?.balance },
     });
 
-    return NextResponse.json({message: transactionType + ' Transaction created Successfully!'},{status: 201});
+    return NextResponse.json({message: transactionType + ': Transaction was Successful!'},{status: 201});
   } catch (error) {
+    if (error instanceof PrismaClientValidationError) {
+      // console.error("Validation Errors:", error.message);
+      // console.error("Validation Error Details:", error.cause);
+      return NextResponse.json({message: error.stack}, {status: 502});
+      // Handle the error appropriately
+    }
     return NextResponse.json({message: error}, {status: 501});
   } 
 

@@ -33,7 +33,8 @@ export async function POST(req: Request){
             data: {
               assetId: asset.id,
               amount: amount,
-              type: "INVEST",
+              type: "INVESTMENT",
+              status: "SUCCESS",
               userId: userId,
             }
           }).catch((err) => {
@@ -52,6 +53,9 @@ export async function POST(req: Request){
                 transactionId: id,
                 closedAt: new Date(closedAt)
             }
+        }).catch((error) =>{
+          return NextResponse.json({message: error}, {status: 502});
+
         })
             
     }

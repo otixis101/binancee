@@ -4,13 +4,19 @@ import axios from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import { signIn, useSession } from 'next-auth/react'
 
+import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import { revalidatePath } from "next/cache";
+import { usePathname } from "next/navigation";
 
 const InvestmentTab = () => {
+    const pathname = usePathname();
 
     const { data: session } = useSession();
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
+
+    const [investments, setInvestments] = useState([])
 
     const [investAmount, setInvestAmount] = useState('0')
 
@@ -26,6 +32,23 @@ const InvestmentTab = () => {
         content: "",
     })
 
+    const getInvestments = async () => {
+        const user = await axios.post('/api/get-user', {
+            email: session?.user?.email
+        })
+
+        await axios.post('/api/get-investment', {
+            "userId": user.data.id,
+        }).then((res) => {
+            setInvestments(res.data.inv)
+        })
+    }
+
+    useEffect(() => {
+        getInvestments();
+
+    }, [])
+
 
     useEffect(() => {
         setInvReturn(parseInt(investAmount) * 6);
@@ -33,20 +56,24 @@ const InvestmentTab = () => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        setResponse({ isError: false, isSuccess: false, content: '' })
+        // setResponse({ isError: false, isSuccess: false, content: '' })
 
         setIsLoading(true)
 
         if ((parseInt(investAmount) < 50 || isNaN(parseInt(investAmount)))) {
-            setResponse(prevResponse => {
-                return {
-                    isError: true,
-                    isSuccess: false,
-                    content: "Amount must be a Number and be atleast $50"
-                }
+            toast({
+                variant: "destructive",
+                title: "Error Message:",
+                description: "Amount must be a Number and be atleast $50",
             })
+            // setResponse({
+            //     isError: true,
+            //     isSuccess: false,
+            //     content: "Amount must be a Number and be atleast $50"
+            // }
+            // )
             setIsLoading(false)
-            alert(getResponse.isError)
+            // alert(getResponse.isError)
             return null;
         }
 
@@ -60,38 +87,38 @@ const InvestmentTab = () => {
         // Calculate the date one month from now
         const oneMonthFromNow = new Date(currentDate);
         oneMonthFromNow.setMonth(currentDate.getMonth() + 1);
-        alert(oneMonthFromNow)
 
         await axios.post('/api/make-investment', {
             "userId": user.data.id,
             "amount": parseInt(investAmount),
             "leverage": 6,
             "roi": (parseInt(investAmount) * 6),
-            "closedAt": oneMonthFromNow.toString()
+            "closedAt": oneMonthFromNow
 
         }).then((res) => {
-            if (res.status == 200) {
-                alert("success")
-                setResponse({
-                    isError: false,
-                    isSuccess: true,
-                    content: res.data.message
+            if (res.data.isError == false) {
+                toast({
+                    title: "Success Message:",
+                    description: res.data.message,
                 })
+                setInvestAmount('0')
+                revalidatePath(pathname)
             }
-            if (res.status > 200 && res.status < 300) {
-                alert("200+ error:" + res.data.message)
-                setResponse({
-                    isError: true,
-                    isSuccess: false,
-                    content: res.data.messaage
+            if (res.data.isError == true) {
+
+                toast({
+                    variant: "destructive",
+                    title: "Error Message:",
+                    description: res.data.message
                 })
             }
         }).catch((error) => {
-            alert(error)
-            setResponse({
-                isError: true,
-                isSuccess: false,
-                content: "Something Went wrong"
+
+            toast({
+                variant: "destructive",
+                title: "Error Message:",
+                description: "Something went Error!",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         })
 
@@ -110,7 +137,7 @@ const InvestmentTab = () => {
             <article className='py-2 px-4'>
                 <div className="bg-slate-100/10 flex flex-col gap-4 py-6 px-4 md:p-8 rounded-md md:rounded-lg">
                     <form onSubmit={handleSubmit} className='flex flex-col w-full text-left gap-2 md:gap-4'>
-                        <p className="text-base md:text-xl font-medium">You can start your Binancee investing journey now</p>
+                        <p className="text-base md:text-xl font-medium">You can start your Binance investing journey now</p>
                         {/* <p className="text-base md:text-xl font-medium">Calculate ROI</p> */}
                         {/* <small className='text-gray-500'>Recommended entry-level features for beginners.</small> */}
                         <div className='flex shrink-0 justify-between gap-2'>
@@ -138,6 +165,39 @@ const InvestmentTab = () => {
                     </form>
                     {/* <Image src={heroImg} alt="hero-image" className=' md:flex' /> */}
                 </div>
+
+                {
+                    investments.length > 0 &&
+                    (
+                        <div className="bg-slate-100/10 flex flex-col py-6 px-4 md:p-8 rounded-md md:rounded-lg">
+                            <p className="text-gray-600 text-sm">My Investments</p>
+                            <ul className="flex flex-col gap-1">
+                                {
+                                    investments.map((inve: any, index) =>
+                                    (
+                                        <li key={index} className="flex items-center justify-between border-b border-gray-300 border-dashed py-2">
+                                            <div className="flex flex-col gap-1">
+                                                <p>BNB/USD</p>
+                                                <p className="text-sm text-gray-500">${inve?.amount}</p>
+                                            </div>
+                                            <div className="flex flex-col gap-1 text-right">
+                                                <p className="text-blue-600">${inve.roi}</p>
+                                                <p className="text-xs text-gray-400">{inve.closedAt}</p>
+                                            </div>
+                                        </li>
+                                    )
+
+
+                                    )
+                                }
+                                {/* fetch all investment plans that are not complete */}
+
+                            </ul>
+                        </div>
+                    )
+
+                }
+
             </article>
         </>
     )

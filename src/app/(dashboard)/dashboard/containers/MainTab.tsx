@@ -7,7 +7,26 @@ import CTADeposit from '../components/ctaDeposit'
 import MarketWidget from "@/components/tradeview_widgets/MarketWidget";
 import InvestmentTab from "./investmentTab";
 
+import { useSession } from 'next-auth/react'
+import axios from "axios"
+import { useEffect, useState } from "react";
+
 const MainTab = () => {
+
+    const { data: session } = useSession();
+
+    const [Asset, setAsset] = useState([])
+
+    const getAsset = async () => {
+        await axios.post('/api/get-asset', {
+            email: session?.user?.email
+        }).then((res) => setAsset(res.data));
+    }
+
+    useEffect(() => {
+        getAsset()
+    }, [])
+
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
@@ -19,7 +38,12 @@ const MainTab = () => {
                 <section className="flex flex-wrap">
                     <div className="md:w-[60%] w-full">
                         <EstimateBalance />
-                        <CTADeposit />
+                        {
+                            Asset &&
+                            (
+                                <CTADeposit />
+                            )
+                        }
                     </div>
                     <div className="md:w-[40%] w-full">
                         <InvestmentTab />

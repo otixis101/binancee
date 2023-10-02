@@ -9,9 +9,12 @@ import { Button } from "@/components/ui/button"
 import Image from 'next/image'
 
 import iconQR from '@/assets/qr-icon.png'
-import { ChevronLeft, CopyIcon } from 'lucide-react'
+import { ChevronLeft, CopyIcon, Currency, DollarSignIcon } from 'lucide-react'
 
 import { useRouter } from 'next/navigation'
+
+import { ToastAction } from "@/components/ui/toast"
+import { useToast } from "@/components/ui/use-toast"
 
 import {
     Select,
@@ -22,10 +25,79 @@ import {
 } from "@/components/ui/select"
 
 
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { useState } from 'react'
 
 
-const Dashboard = () => {
+
+import axios from "axios";
+import { signIn, useSession } from 'next-auth/react'
+
+
+
+const Deposit = () => {
     const router = useRouter();
+    const { data: session } = useSession();
+
+    const { toast } = useToast()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [copied, setCopied] = useState(false)
+    const [textToCopy, setTextToCopy] = useState('1BEjMSqbWHDKQuVuXVi31sKMhnruVJfq5a');
+
+
+    const handleCopy = async () => {
+        await navigator.clipboard.writeText(textToCopy);
+        setCopied(true)
+        setTimeout(() => {
+            setCopied(false)
+        }, 2000);
+    }
+
+    const handleDeposit = async () => {
+
+        setIsLoading(true)
+
+        const user = await axios.post('/api/get-user', {
+            email: session?.user?.email
+        })
+
+        await axios.post('/api/make-investment', {
+
+
+        }).then((res) => {
+            if (res.data.isError == false) {
+                toast({
+                    title: "Success Message:",
+                    description: res.data.message,
+                })
+                
+            }
+            if (res.data.isError == true) {
+
+                toast({
+                    variant: "destructive",
+                    title: "Error Message:",
+                    description: res.data.message
+                })
+            }
+        }).catch((error) => {
+
+            toast({
+                variant: "destructive",
+                title: "Error Message:",
+                description: "Something went Error!",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+        })
+        setIsLoading(false)
+    }
+
     return (
         <>
             <Navbar />
@@ -67,7 +139,7 @@ const Dashboard = () => {
                                                 </Select>
                                             </div>
                                         </div>
-                                        {/* <div className="flex relative pb-12">
+                                        <div className="flex relative pb-12">
                                             <div className="h-full w-10 absolute inset-0 flex items-center justify-center">
                                                 <div className="h-full w-1 bg-gray-200 pointer-events-none"></div>
                                             </div>
@@ -75,19 +147,19 @@ const Dashboard = () => {
                                                 <p>2</p>
                                             </div>
                                             <div className="flex-grow flex flex-col gap-3 pl-4">
-                                                <h2 className="font-semibold text-gray-900 tracking-wider">Select Network</h2>
+                                                <h2 className="font-semibold text-gray-900 tracking-wider">Deposit Amount</h2>
                                                 <div className='flex gap-1 items-center border border-gray-200 rounded-lg px-3 overflow-hidden py-2 w-fit'>
-                                                    <SearchIcon className='w-4 h-4 text-gray-400' />
+                                                    <DollarSignIcon className='w-4 h-4 text-gray-400' />
                                                     <input type="text" className='outline-0 border-none' />
                                                 </div>
                                             </div>
-                                        </div> */}
+                                        </div>
                                         <div className="flex relative pb-12">
                                             <div className="h-full w-10 absolute inset-0 flex items-center justify-center">
                                                 <div className="h-full w-1 bg-gray-200 pointer-events-none"></div>
                                             </div>
                                             <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 inline-flex items-center justify-center text-orange-900 relative z-10">
-                                                <p>2</p>
+                                                <p>3</p>
                                             </div>
                                             <div className="flex-grow flex flex-col gap-3 pl-4 ">
                                                 <h2 className="font-semibold text-gray-900 tracking-wider">Deposit Address</h2>
@@ -98,16 +170,27 @@ const Dashboard = () => {
                                                     <li className="flex justify-between flex-wrap items-center gap-4">
                                                         <div className='flex flex-col gap-1'>
                                                             <small className='text-gray-500'>Address</small>
-                                                            <small className='font-semibold'>1BEjMSqbWHDKQuVuXVi31sKMhnruVJfq5a</small>
+                                                            <small className='font-semibold'>{textToCopy}</small>
                                                         </div>
-                                                        <Button variant="default" size="icon" className='bg-gray-100 hover:bg-gray-200 rounded-lg'>
-                                                            <CopyIcon className='w-4 h-4 text-gray-800' />
-                                                        </Button>
+                                                        <TooltipProvider>
+                                                            <Tooltip open={copied}>
+                                                                <TooltipTrigger asChild>
+                                                                    <Button variant="default" size="icon" className='bg-gray-100 hover:bg-gray-200 rounded-lg'>
+                                                                        <CopyIcon className='w-4 h-4 text-gray-800' onClick={handleCopy} />
+                                                                    </Button>
+                                                                </TooltipTrigger>
+                                                                <TooltipContent>
+                                                                    <p>Copied!</p>
+                                                                </TooltipContent>
+                                                            </Tooltip>
+                                                        </TooltipProvider>
+
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
 
+                                        <Button onClick={handleDeposit} className='h-fit w-fit px-8 py-3 mt-2 ml-auto bg-primary-light hover:bg-primary-light text-gray-700 font-semibold' disabled={isLoading}>{isLoading ? 'Setting Up' : 'Confirm Deposit'}</Button>
 
                                     </div>
                                 </div>
@@ -148,4 +231,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default Deposit

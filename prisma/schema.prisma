@@ -34,6 +34,7 @@ model User {
   accounts      Account[]
   // sessions Session[]
   Investments   Investments[]
+  Deposits      Deposits[]
 }
 
 model Account {
@@ -70,16 +71,17 @@ model Asset {
 }
 
 model Transaction {
-  id           String          @id @default(uuid())
-  asset        Asset           @relation(fields: [assetId], references: [id])
+  id           String            @id @default(uuid())
+  asset        Asset             @relation(fields: [assetId], references: [id])
   assetId      String
   amount       Float
   type         TransactionType
   status       TransactionStatus @default(PENDING)
-  user         User            @relation(fields: [userId], references: [id])
+  user         User              @relation(fields: [userId], references: [id])
   userId       String
-  createdAt    DateTime        @default(now())
+  createdAt    DateTime          @default(now())
   Investements Investments[]
+  Deposits     Deposits[]
 }
 
 enum TransactionType {
@@ -94,6 +96,24 @@ enum TransactionStatus {
   FAILED
 }
 
+model Deposits {
+  id            String        @id @default(uuid())
+  amount        Float
+  token         String
+  owner         User          @relation(fields: [ownerId], references: [id])
+  ownerId       String
+  status        DepositStatus @default(PENDING)
+  transaction   Transaction   @relation(fields: [transactionId], references: [id])
+  transactionId String
+  createdAt     DateTime      @default(now())
+}
+
+enum DepositStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
 model Investments {
   id            String           @id @default(uuid())
   amount        Float
@@ -101,7 +121,7 @@ model Investments {
   roi           Float
   owner         User             @relation(fields: [ownerId], references: [id])
   ownerId       String
-  status        InvestmentStatus  @default(STARTED)
+  status        InvestmentStatus @default(STARTED)
   transaction   Transaction      @relation(fields: [transactionId], references: [id])
   transactionId String
   createdAt     DateTime         @default(now())

@@ -1,6 +1,12 @@
 -- CreateEnum
 CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'WITHDRAWAL', 'INVESTMENT');
 
+-- CreateEnum
+CREATE TYPE "TransactionStatus" AS ENUM ('PENDING', 'SUCCESS', 'FAILED');
+
+-- CreateEnum
+CREATE TYPE "InvestmentStatus" AS ENUM ('STARTED', 'CANCELLED', 'COMPLETED');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -51,6 +57,7 @@ CREATE TABLE "Transaction" (
     "assetId" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "type" "TransactionType" NOT NULL,
+    "status" "TransactionStatus" NOT NULL DEFAULT 'PENDING',
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -64,6 +71,7 @@ CREATE TABLE "Investments" (
     "leverage" INTEGER NOT NULL,
     "roi" DOUBLE PRECISION NOT NULL,
     "ownerId" TEXT NOT NULL,
+    "status" "InvestmentStatus" NOT NULL DEFAULT 'STARTED',
     "transactionId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "closedAt" TIMESTAMP(3) NOT NULL,

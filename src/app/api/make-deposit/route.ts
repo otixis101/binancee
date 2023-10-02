@@ -11,7 +11,7 @@ export async function POST(req: Request){
     
     const body = await req.json();
     
-    const {userId, amount, leverage, roi, closedAt} = body;
+    const {userId, amount, token} = body;
     
 
     const asset = await db.asset.findFirst({
@@ -24,19 +24,20 @@ export async function POST(req: Request){
       return NextResponse.json({message:'User has no Assets', isError: true},{status: 208});
     }
         
-        //check if asset has enought balance 
-        if (asset.balance >= amount) {
-            asset.balance -= amount;
-        } else {
-            return NextResponse.json({message: 'Insufficient balance for investment', isError: true},{status: 203});
-        }
+        // //check if asset has enought balance 
+        // if (asset.balance >= amount) {
+        //     asset.balance += amount;
+        // } else {
+        //     return NextResponse.json({message: 'Insufficient balance for deposit', isError: true},{status: 203});
+        // }
+        asset.balance += amount
       
         // Create a new transaction of investment
         const transaction = await db.transaction.create({
             data: {
               assetId: asset.id,
               amount: amount,
-              type: "INVESTMENT",
+              type: "DEPOSIT",
               // status: "SUCCESS",
               userId: userId,
             }
@@ -45,14 +46,12 @@ export async function POST(req: Request){
         const {id} = transaction;
 
         //create new investment row
-        await db.investments.create({
+        await db.deposits.create({
             data: {
                 amount: amount,
-                leverage: leverage,
-                roi: roi,
+                token: token,
                 ownerId: userId,
                 transactionId: id,
-                closedAt: new Date(closedAt),
             }
         })
     
@@ -65,7 +64,7 @@ export async function POST(req: Request){
       data: { balance: asset?.balance },
     });
 
-    return NextResponse.json({message: "Invesment Transaction created Successfully!", isError: false},{status: 200});
+    return NextResponse.json({message: "Deposit Transaction created Successfully!", isError: false},{status: 200});
   } catch (error) {
     if (error instanceof PrismaClientValidationError) {
       // console.error("Validation Errors:", error.message);

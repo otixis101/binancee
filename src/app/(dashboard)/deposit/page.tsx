@@ -31,7 +31,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 
 
@@ -46,6 +46,9 @@ const Deposit = () => {
 
     const { toast } = useToast()
     const [isLoading, setIsLoading] = useState(false)
+
+    const [token, setToken] = useState("")
+    const [amount, setAmount] = useState('0')
 
     const [copied, setCopied] = useState(false)
     const [textToCopy, setTextToCopy] = useState('1BEjMSqbWHDKQuVuXVi31sKMhnruVJfq5a');
@@ -63,12 +66,31 @@ const Deposit = () => {
 
         setIsLoading(true)
 
+        if ((parseInt(amount) < 50 || isNaN(parseInt(amount)))) {
+            toast({
+                variant: "destructive",
+                title: "Error Message:",
+                description: "Amount must be a Number and be atleast $50",
+            })
+            // setResponse({
+            //     isError: true,
+            //     isSuccess: false,
+            //     content: "Amount must be a Number and be atleast $50"
+            // }
+            // )
+            setIsLoading(false)
+            // alert(getResponse.isError)
+            return null;
+        }
+
         const user = await axios.post('/api/get-user', {
             email: session?.user?.email
         })
 
-        await axios.post('/api/make-investment', {
-
+        await axios.post('/api/make-deposit', {
+            "userId": user.data.id,
+            "amount": parseInt(amount),
+            "token": token
 
         }).then((res) => {
             if (res.data.isError == false) {
@@ -76,7 +98,9 @@ const Deposit = () => {
                     title: "Success Message:",
                     description: res.data.message,
                 })
-                
+                setToken('')
+                setAmount('0')
+
             }
             if (res.data.isError == true) {
 
@@ -91,7 +115,7 @@ const Deposit = () => {
             toast({
                 variant: "destructive",
                 title: "Error Message:",
-                description: "Something went Error!",
+                description: "Something went Error: " + error,
                 action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
         })
@@ -126,7 +150,7 @@ const Deposit = () => {
                                             <div className="flex-grow flex flex-col gap-3 pl-4">
                                                 <h2 className="font-semibold text-gray-900 tracking-wider">Select Coin</h2>
 
-                                                <Select>
+                                                <Select onValueChange={(value: string) => setToken(value)}>
                                                     <SelectTrigger className="w-[180px]">
                                                         <SelectValue placeholder="Select A Coin" />
                                                     </SelectTrigger>
@@ -150,7 +174,11 @@ const Deposit = () => {
                                                 <h2 className="font-semibold text-gray-900 tracking-wider">Deposit Amount</h2>
                                                 <div className='flex gap-1 items-center border border-gray-200 rounded-lg px-3 overflow-hidden py-2 w-fit'>
                                                     <DollarSignIcon className='w-4 h-4 text-gray-400' />
-                                                    <input type="text" className='outline-0 border-none' />
+                                                    <input type="number" min={0} value={amount}
+                                                        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                                                            setAmount(event.target.value)
+                                                        }}
+                                                        className='outline-0 border-none' />
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +218,7 @@ const Deposit = () => {
                                             </div>
                                         </div>
 
-                                        <Button onClick={handleDeposit} className='h-fit w-fit px-8 py-3 mt-2 ml-auto bg-primary-light hover:bg-primary-light text-gray-700 font-semibold' disabled={isLoading}>{isLoading ? 'Setting Up' : 'Confirm Deposit'}</Button>
+                                        <Button onClick={handleDeposit} className='h-fit w-fit px-8 py-3 mt-2 ml-auto bg-primary-light hover:bg-primary-light text-gray-700 font-semibold' disabled={isLoading} > {isLoading ? 'Setting Up' : 'Confirm Deposit'}</Button>
 
                                     </div>
                                 </div>

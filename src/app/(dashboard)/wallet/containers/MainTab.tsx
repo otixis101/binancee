@@ -1,13 +1,36 @@
 "use client"
 
+
+import axios from "axios";
+import { signIn, useSession } from 'next-auth/react'
 import EstimateBalance from "./balance"
 
-import MarketWidget from "@/components/tradeview_widgets/MarketWidget";
-import InvestmentTab from "./investmentTab";
+
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 const MainTab = () => {
+
+    const { data: session } = useSession();
+
+    const [transactions, setTransactions] = useState([])
+
+    const getTransactions = async () => {
+        const user = await axios.post('/api/get-user', {
+            email: session?.user?.email
+        })
+
+        await axios.post('/api/get-transactions', {
+            "userId": user.data.id,
+        }).then((res) => {
+            setTransactions(res.data.transactions)
+        })
+    }
+
+    useEffect(() => {
+        getTransactions();
+
+    }, [])
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
@@ -29,7 +52,7 @@ const MainTab = () => {
                             <h1>My Assets</h1>
                             <div className="relative overflow-x-auto">
                                 <table className="w-full text-sm text-left text-gray-500 ">
-                                    <thead className="text-xs text-gray-700 capitalize ">
+                                    <thead className="text-xs text-gray-700 capitalize">
                                         <tr>
                                             <th scope="col" className="px-4 py-3">
                                                 Wallet
@@ -103,37 +126,37 @@ const MainTab = () => {
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr className="bg-white border-b  dark:border-gray-700">
-                                            <th scope="row" className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                TRX-dep-jkasbewjdu2382364
-                                            </th>
-                                            <td className="px-4 py-4">
-                                                $2999
-                                            </td>
-                                            <td className="px-4 py-4">
-                                                <span className="px-2 py-1 rounded-lg bg-green-200 text-xs">
-                                                    Success
-                                                </span>
-                                            </td>
+                                    {
+                                        transactions?.length > 0 &&
+                                        (
+                                            <tbody>
+                                                {
+                                                    transactions.map((transact: any, index) =>
+                                                    (
+                                                        <tr key={index} className="bg-white border-b  dark:border-gray-700">
+                                                            <th scope="row" className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap truncate max-w-[100px]">
+                                                                {transact.id}
+                                                            </th>
+                                                            <td className="px-4 py-4">
+                                                                {transact.amount}
+                                                            </td>
+                                                            <td className="px-4 py-4">
+                                                                <span className={classNames("px-2 py-1 rounded-lg text-xs",
+                                                                    transact.status == 'SUCCESS' ? "bg-green-200" :
+                                                                        transact.status == "FAILED" ? "bg-red-200" : "bg-yellow-200",
+                                                                )}>
+                                                                    {transact.status}
+                                                                </span>
+                                                            </td>
 
-                                        </tr>
-                                        <tr className="bg-white border-b  dark:border-gray-700">
-                                            <th scope="row" className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                                TRX-wth-jkasbewjdu2382364
-                                            </th>
-                                            <td className="px-4 py-4">
-                                                $187
-                                            </td>
-                                            <td className="px-4 py-4">
-                                                <span className="px-2 py-1 rounded-lg bg-red-200 text-xs">
-                                                    Failed
-                                                </span>
-                                            </td>
+                                                        </tr>
+                                                    ))
+                                                }
 
-                                        </tr>
 
-                                    </tbody>
+                                            </tbody>
+                                        )
+                                    }
                                 </table>
                             </div>
 

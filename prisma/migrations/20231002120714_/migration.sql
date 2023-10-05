@@ -5,6 +5,9 @@ CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'WITHDRAWAL', 'INVESTMENT');
 CREATE TYPE "TransactionStatus" AS ENUM ('PENDING', 'SUCCESS', 'FAILED');
 
 -- CreateEnum
+CREATE TYPE "DepositStatus" AS ENUM ('PENDING', 'SUCCESS', 'FAILED');
+
+-- CreateEnum
 CREATE TYPE "InvestmentStatus" AS ENUM ('STARTED', 'CANCELLED', 'COMPLETED');
 
 -- CreateTable
@@ -65,6 +68,19 @@ CREATE TABLE "Transaction" (
 );
 
 -- CreateTable
+CREATE TABLE "Deposits" (
+    "id" TEXT NOT NULL,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "token" TEXT NOT NULL,
+    "ownerId" TEXT NOT NULL,
+    "status" "DepositStatus" NOT NULL DEFAULT 'PENDING',
+    "transactionId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Deposits_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Investments" (
     "id" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
@@ -96,6 +112,12 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_assetId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Deposits" ADD CONSTRAINT "Deposits_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Deposits" ADD CONSTRAINT "Deposits_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Investments" ADD CONSTRAINT "Investments_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

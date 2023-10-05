@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { PrismaClientUnknownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { NextResponse } from "next/server";
 
 
@@ -24,12 +24,7 @@ export async function POST(req: Request){
       return NextResponse.json({message:'User has no Assets', isError: true},{status: 208});
     }
         
-        // //check if asset has enought balance 
-        // if (asset.balance >= amount) {
-        //     asset.balance += amount;
-        // } else {
-        //     return NextResponse.json({message: 'Insufficient balance for deposit', isError: true},{status: 203});
-        // }
+        
         asset.balance += amount
       
         // Create a new transaction of investment

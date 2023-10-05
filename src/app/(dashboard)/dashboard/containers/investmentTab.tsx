@@ -102,16 +102,16 @@ const InvestmentTab = () => {
                     description: res.data.message,
                 })
                 setInvestAmount('0')
-                revalidatePath(pathname)
             }
             if (res.data.isError == true) {
-
+                
                 toast({
                     variant: "destructive",
                     title: "Error Message:",
                     description: res.data.message
                 })
             }
+            // revalidatePath(pathname)
         }).catch((error) => {
 
             toast({

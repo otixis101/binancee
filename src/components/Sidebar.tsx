@@ -54,19 +54,19 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href={'/referral'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
-                        pathname.includes('/referral') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
+                    <Link href={'/deposit'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
+                        pathname.includes('/deposit') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
                         <UserIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
-                        <div className="group-hover:text-gray-800 group-hover:font-medium">Referral</div>
+                        <div className="group-hover:text-gray-800 group-hover:font-medium">Deposit</div>
                     </Link>
                 </li>
                 <li>
-                    <Link href={'/settings'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
-                        pathname.includes('/settings') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
+                    <Link href={'/withdrawal'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
+                        pathname.includes('/withdrawal') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
                         <Cog6ToothIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
-                        <div className="group-hover:text-gray-800 group-hover:font-medium">Settings</div>
+                        <div className="group-hover:text-gray-800 group-hover:font-medium">Withdrawal</div>
                     </Link>
                 </li>
             </ul>

@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import MainTab from './containers/MainTab'
 
+
+
 export const metadata: Metadata = {
     title: 'Binancee | User Dashboard',
     description: 'Use Dashboard',

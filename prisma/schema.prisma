@@ -35,6 +35,7 @@ model User {
   // sessions Session[]
   Investments   Investments[]
   Deposits      Deposits[]
+  Withdrawals   Withdrawals[]
 }
 
 model Account {
@@ -82,6 +83,7 @@ model Transaction {
   createdAt    DateTime          @default(now())
   Investements Investments[]
   Deposits     Deposits[]
+  Withdrawals  Withdrawals[]
 }
 
 enum TransactionType {
@@ -109,6 +111,24 @@ model Deposits {
 }
 
 enum DepositStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Withdrawals {
+  id            String           @id @default(uuid())
+  amount        Float
+  token         String
+  owner         User             @relation(fields: [ownerId], references: [id])
+  ownerId       String
+  status        WithdrawalStatus @default(PENDING)
+  transaction   Transaction      @relation(fields: [transactionId], references: [id])
+  transactionId String
+  createdAt     DateTime         @default(now())
+}
+
+enum WithdrawalStatus {
   PENDING
   SUCCESS
   FAILED

@@ -41,8 +41,8 @@ const MainTab = () => {
                 <nav className='bg-gray-50 px-8 py-8 flex flex-wrap justify-between gap-4 '>
                     <h1 className="text-3xl font-semibold">Wallet Overview</h1>
                     <div className="flex gap-4 flex-wrap">
-                        <Link href={'/deposit'} className="py-2 px-6 font-medium bg-primary-light hover:bg-primary/80 text-sm rounded flex gap-2">Deposit</Link>
-                        <Link href={'/withdrawal'} className="py-2 px-6 font-medium bg-gray-200 hover:bg-gray-300 text-sm rounded flex gap-2">Withdraw</Link>
+                        <Link href={'/deposit'} className="py-2 px-6 font-medium bg-primary-light hover:bg-primary/80 text-sm rounded flex gap-2">Make a Deposit</Link>
+                        <Link href={'/withdrawal'} className="py-2 px-6 font-medium bg-gray-200 hover:bg-gray-300 text-sm rounded flex gap-2">Make a Withdrawal</Link>
                     </div>
                 </nav>
                 <section className="flex flex-col lg:flex-row p-4 gap-4">
@@ -138,7 +138,7 @@ const MainTab = () => {
                                                                 {transact.id}
                                                             </th>
                                                             <td className="px-4 py-4">
-                                                                {transact.amount}
+                                                                ${transact.amount}
                                                             </td>
                                                             <td className="px-4 py-4">
                                                                 <span className={classNames("px-2 py-1 rounded-lg text-xs",

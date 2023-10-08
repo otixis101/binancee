@@ -1,7 +1,7 @@
 "use client"
 
 
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import { ChevronLeftIcon } from '@heroicons/react/24/outline'
@@ -31,7 +31,16 @@ import {
 import axios from "axios";
 import { signIn, useSession } from 'next-auth/react'
 
+type tAsset = {
+    id: string;
+    symbol: string;
+    name: string;
+    balance: number;
+    createdAt: string;
+    ownerId: string;
+}
 
+export const revalidate = 30
 
 const Dashboard = () => {
     const router = useRouter();
@@ -44,6 +53,14 @@ const Dashboard = () => {
     const [address, setAddress] = useState("")
     const [amount, setAmount] = useState('0')
 
+    const [Asset, setAsset] = useState<tAsset>()
+
+    const getAsset = async () => {
+        await axios.post('/api/get-asset', {
+            email: session?.user?.email
+        }).then((res) => setAsset(res.data));
+    }
+
 
     const handleWithdrawal = async () => {
 
@@ -54,6 +71,17 @@ const Dashboard = () => {
                 variant: "destructive",
                 title: "Error Message:",
                 description: "Amount must be a Number and be atleast $50",
+            })
+            setIsLoading(false)
+
+            return null;
+        }
+
+        if (Asset && Asset?.balance < parseInt(amount)) {
+            toast({
+                variant: "destructive",
+                title: "Error Message:",
+                description: "Not enough funds to make a withdrawal",
             })
             setIsLoading(false)
 
@@ -99,6 +127,11 @@ const Dashboard = () => {
         })
         setIsLoading(false)
     }
+
+
+    useEffect(() => {
+        getAsset();
+    }, [])
 
     return (
         <>
@@ -213,7 +246,7 @@ const Dashboard = () => {
                                 <ul className='grid grid-flow-row grid-cols-2 text-sm gap-4 w-full lg:w-1/2'>
                                     <li>
                                         <small className='text-gray-500'>Asset Balance</small>
-                                        <p className='font-semibold'>0 BTC</p>
+                                        <p className='font-semibold'>{Asset?.balance} USD</p>
                                     </li>
                                     <li>
                                         <small className='text-gray-500'>Minimum withdrawal</small>

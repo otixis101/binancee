@@ -48,7 +48,7 @@ const MainTab = () => {
     const getEstimate = async () => {
         const apiUrl = `https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=btc`;
 
-        const conv_price = fetch(apiUrl)
+        fetch(apiUrl)
             .then((response) => {
                 // Check if the request was successful (status code 2xx)
                 if (!response.ok) {
@@ -59,8 +59,9 @@ const MainTab = () => {
             })
             .then((data) => {
                 const result = Object.values(data);
-                const bal = Asset ? (Asset.balance * (result as unknown as number)) : 0.00;
+                // const bal = Asset ? (Asset.balance * (result as unknown as number)) : 0.00;
                 setTranslatedBal(result.toString())
+
             })
             .catch((error) => {
                 // Handle any errors that occurred during the fetch
@@ -77,17 +78,9 @@ const MainTab = () => {
             "userId": user.data.id,
         }).then((res) => {
             setInvestments(res.data.inv)
-            console.log(investments)
         })
 
-        //
-        if (investments.length > 0) {
-            alert('investo')
-            investments.map((inve: any) => {
-                setTotalInvest((prevTotal) => prevTotal + inve.amount)
-                // console.log(inve.amount)
-            })
-        }
+
     }
 
     const getTransactions = async () => {
@@ -103,22 +96,28 @@ const MainTab = () => {
     }
 
     useEffect(() => {
-        getInvestments();
-
-    }, [])
-
-
-    useEffect(() => {
-        getAsset()
-        getEstimate()
-    }, [])
-
-
+        //
+        if (investments.length > 0) {
+            investments.map((inve: any) => {
+                setTotalInvest((prevTotal) => prevTotal + inve.amount)
+                // console.log(inve.amount)
+            })
+        }
+    }, [investments])
 
     useEffect(() => {
         getTransactions();
+        console.log(translatedBal)
 
+    }, [translatedBal])
+
+
+    useEffect(() => {
+        getEstimate();
+        getAsset();
+        getInvestments();
     }, [])
+
 
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
@@ -164,7 +163,7 @@ const MainTab = () => {
                                             </td>
                                             <td className="px-4 py-4">
                                                 <div className="flex flex-col items-end">
-                                                    <b>{Asset ? ((Asset?.balance - totalInvest) * parseInt(translatedBal)) : 0.00} BTC</b>
+                                                    <b>{Asset ? ((Asset?.balance - totalInvest) * parseFloat(translatedBal)) : 0.00} BTC</b>
                                                     <small className="text-gray-400">{
                                                         Asset ?
                                                             Asset?.symbol + "" + (Asset?.balance - totalInvest)
@@ -183,7 +182,7 @@ const MainTab = () => {
                                             </td>
                                             <td className="px-4 py-4">
                                                 <div className="flex flex-col items-end">
-                                                    <b>{Asset ? (Asset?.balance * parseInt(translatedBal)) : 0.00} BTC</b>
+                                                    <b>{Asset ? (Asset?.balance * parseFloat(translatedBal)) : 0.00} BTC</b>
                                                     <small className="text-gray-400">${totalInvest}</small>
                                                 </div>
                                             </td>

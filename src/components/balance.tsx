@@ -66,7 +66,6 @@ const Balance = () => {
 
     const handleToggle = () => {
         setIsHidden((prevHidden) => !prevHidden);
-        console.log(isHidden)
     }
 
     useEffect(() => {

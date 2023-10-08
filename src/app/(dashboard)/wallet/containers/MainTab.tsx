@@ -3,17 +3,92 @@
 
 import axios from "axios";
 import { signIn, useSession } from 'next-auth/react'
-import EstimateBalance from "./balance"
+import EstimateBalance from "@/components/balance"
 
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
+
+
+type tAsset = {
+    id: string;
+    symbol: string;
+    name: string;
+    balance: number;
+    createdAt: string;
+    ownerId: string;
+}
+
+export const revalidate = 30
 
 const MainTab = () => {
 
     const { data: session } = useSession();
 
     const [transactions, setTransactions] = useState([])
+
+    const [investments, setInvestments] = useState([])
+
+    const [totalInvest, setTotalInvest] = useState(0)
+
+    const [Asset, setAsset] = useState<tAsset>()
+
+    const [translatedBal, setTranslatedBal]: any = useState('0.00')
+
+
+
+    const getAsset = async () => {
+        await axios.post('/api/get-asset', {
+            email: session?.user?.email
+        }).then((res) => setAsset(res.data));
+    }
+
+
+    const getEstimate = async () => {
+        const apiUrl = `https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=btc`;
+
+        const conv_price = fetch(apiUrl)
+            .then((response) => {
+                // Check if the request was successful (status code 2xx)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Parse the response data as JSON
+                return response.json();
+            })
+            .then((data) => {
+                const result = Object.values(data);
+                const bal = Asset ? (Asset.balance * (result as unknown as number)) : 0.00;
+                setTranslatedBal(result.toString())
+            })
+            .catch((error) => {
+                // Handle any errors that occurred during the fetch
+                console.error('Fetch error:', error);
+            });
+    }
+
+    const getInvestments = async () => {
+        const user = await axios.post('/api/get-user', {
+            email: session?.user?.email
+        })
+
+        await axios.post('/api/get-investment', {
+            "userId": user.data.id,
+        }).then((res) => {
+            setInvestments(res.data.inv)
+            console.log(investments)
+        })
+
+        //
+        if (investments.length > 0) {
+            alert('investo')
+            investments.map((inve: any) => {
+                setTotalInvest((prevTotal) => prevTotal + inve.amount)
+                // console.log(inve.amount)
+            })
+        }
+    }
 
     const getTransactions = async () => {
         const user = await axios.post('/api/get-user', {
@@ -26,6 +101,19 @@ const MainTab = () => {
             setTransactions(res.data.transactions)
         })
     }
+
+    useEffect(() => {
+        getInvestments();
+
+    }, [])
+
+
+    useEffect(() => {
+        getAsset()
+        getEstimate()
+    }, [])
+
+
 
     useEffect(() => {
         getTransactions();
@@ -76,8 +164,12 @@ const MainTab = () => {
                                             </td>
                                             <td className="px-4 py-4">
                                                 <div className="flex flex-col items-end">
-                                                    <b>0.00 USDT</b>
-                                                    <small className="text-gray-400">$0.00</small>
+                                                    <b>{Asset ? ((Asset?.balance - totalInvest) * parseInt(translatedBal)) : 0.00} BTC</b>
+                                                    <small className="text-gray-400">{
+                                                        Asset ?
+                                                            Asset?.symbol + "" + (Asset?.balance - totalInvest)
+                                                            : '$0.00'
+                                                    }</small>
                                                 </div>
                                             </td>
 
@@ -91,8 +183,8 @@ const MainTab = () => {
                                             </td>
                                             <td className="px-4 py-4">
                                                 <div className="flex flex-col items-end">
-                                                    <b>0.00 USDT</b>
-                                                    <small className="text-gray-400">$0.00</small>
+                                                    <b>{Asset ? (Asset?.balance * parseInt(translatedBal)) : 0.00} BTC</b>
+                                                    <small className="text-gray-400">${totalInvest}</small>
                                                 </div>
                                             </td>
 

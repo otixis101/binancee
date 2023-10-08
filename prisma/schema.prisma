@@ -120,6 +120,7 @@ model Withdrawals {
   id            String           @id @default(uuid())
   amount        Float
   token         String
+  address       String
   owner         User             @relation(fields: [ownerId], references: [id])
   ownerId       String
   status        WithdrawalStatus @default(PENDING)

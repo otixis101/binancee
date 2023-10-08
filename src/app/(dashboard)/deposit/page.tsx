@@ -148,7 +148,7 @@ const Deposit = () => {
                                                 <p>1</p>
                                             </div>
                                             <div className="flex-grow flex flex-col gap-3 pl-4">
-                                                <h2 className="font-semibold text-gray-900 tracking-wider">Select Coin</h2>
+                                                <h2 className="font-semibold text-gray-900 tracking-wider text-sm mt-2">Select Coin</h2>
 
                                                 <Select onValueChange={(value: string) => setToken(value)}>
                                                     <SelectTrigger className="w-[180px]">
@@ -171,7 +171,7 @@ const Deposit = () => {
                                                 <p>2</p>
                                             </div>
                                             <div className="flex-grow flex flex-col gap-3 pl-4">
-                                                <h2 className="font-semibold text-gray-900 tracking-wider">Deposit Amount</h2>
+                                                <h2 className="font-semibold text-gray-900 tracking-wider text-sm mt-2">Deposit Amount</h2>
                                                 <div className='flex gap-1 items-center border border-gray-200 rounded-lg px-3 overflow-hidden py-2 w-fit'>
                                                     <DollarSignIcon className='w-4 h-4 text-gray-400' />
                                                     <input type="number" min={0} value={amount}
@@ -190,7 +190,7 @@ const Deposit = () => {
                                                 <p>3</p>
                                             </div>
                                             <div className="flex-grow flex flex-col gap-3 pl-4 ">
-                                                <h2 className="font-semibold text-gray-900 tracking-wider">Deposit Address</h2>
+                                                <h2 className="font-semibold text-gray-900 tracking-wider text-sm mt-2">Deposit Address</h2>
                                                 <ul className="flex flex-wrap gap-6 items-center mt-8 p-4 bg-gray-50 w-fit">
                                                     <li className='h-20 aspect-square relative'>
                                                         <Image src={iconQR} alt='image qr' className='object-cover' fill />
@@ -233,13 +233,10 @@ const Deposit = () => {
                                     </div>
                                     <ul className='flex flex-col text-gray-500 gap-3 list-disc text-xs font-light pl-8'>
                                         <li>
-                                            Deposits will be credited and available for Spot Trading after 1 confirmations.
+                                            Deposits will be credited and available for Investment after 1 confirmations.
                                         </li>
                                         <li>
                                             Deposits will be unlocked and available for withdrawal/other activities after 2 network confirmations.
-                                        </li>
-                                        <li>
-                                            Do not send NFTs to this address. Learn how to deposit NFTs
                                         </li>
                                         <li>
                                             Do not send NFTs to this address. Learn how to deposit NFTs

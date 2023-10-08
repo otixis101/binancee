@@ -1,6 +1,6 @@
 "use client"
 
-import EstimateBalance from "./balance"
+import EstimateBalance from "@/components/balance"
 import UserDetails from "./userDetails"
 import CTADeposit from '../components/ctaDeposit'
 

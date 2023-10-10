@@ -1,7 +1,7 @@
 "use client"
 
 import { Cog8ToothIcon } from "@heroicons/react/24/outline"
-import { BanknotesIcon, Cog6ToothIcon, IdentificationIcon, ShieldCheckIcon, ShieldExclamationIcon, UserIcon, WalletIcon } from "@heroicons/react/24/solid"
+import { BanknotesIcon, Cog6ToothIcon, IdentificationIcon, InboxArrowDownIcon, InboxStackIcon, ShieldCheckIcon, ShieldExclamationIcon, UserIcon, WalletIcon } from "@heroicons/react/24/solid"
 import { LayoutDashboardIcon } from "lucide-react"
 import Link from "next/link"
 
@@ -37,14 +37,14 @@ const Sidebar = () => {
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Security</div>
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link href={'/identification'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/identification') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
                         <IdentificationIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Identification</div>
                     </Link>
-                </li>
+                </li> */}
                 <li>
                     <Link href={'/wallet'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/wallet') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
@@ -57,7 +57,7 @@ const Sidebar = () => {
                     <Link href={'/deposit'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/deposit') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
-                        <UserIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
+                        <InboxArrowDownIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Deposit</div>
                     </Link>
                 </li>
@@ -65,7 +65,7 @@ const Sidebar = () => {
                     <Link href={'/withdrawal'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/withdrawal') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
-                        <Cog6ToothIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
+                        <InboxStackIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Withdrawal</div>
                     </Link>
                 </li>

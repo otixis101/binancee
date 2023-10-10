@@ -31,7 +31,7 @@ const SignupTemplate = () => {
     const [currentStage, setCurrentStage] = useState(1);
 
 
-    const handleStageChange = (stage: number) => {
+    const handleStageChange = (stage: number, email?: string) => {
         setCurrentStage(stage)
     }
 

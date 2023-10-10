@@ -28,6 +28,7 @@ import { FieldValues, useForm } from "react-hook-form"
 import { checkPasswordMacth } from "@/prismaActions/checkPasswordMatch"
 import { checkExists } from "@/prismaActions/checkExists"
 import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 const LoginForm = () => {
 
@@ -134,7 +135,7 @@ const LoginForm = () => {
                         <button type="submit" className="flex items-center justify-center gap-4 bg-primary-light disabled:bg-primary-light/50 p-4 font-semibold rounded-md" disabled={isSubmitting}>
 
                             {isSubmitting ?
-                                'Submitting'
+                                <Loader2 className="w-4 h-4 animate-spin" />
                                 :
                                 'Submit'
                             }

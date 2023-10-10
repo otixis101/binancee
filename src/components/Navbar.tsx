@@ -130,8 +130,8 @@ const Navbar = () => {
                                     <li className="flex whitespace-nowrap bg-gray-200 text-xs py-1 px-2 rounded-full"><UserIcon className="w-4 h-4 text-primary-light" />Regular User</li>
                                 </ul>
                             </li>
-                            <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group"><ShieldCheckIcon className="w-5 h-5  group-hover:text-primary-light" /> Security</li>
-                            <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group"><IdentificationIcon className="w-5 h-5 group-hover:text-primary-light" /> Identification</li>
+                            {/* <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group"><ShieldCheckIcon className="w-5 h-5  group-hover:text-primary-light" /> Security</li> */}
+                            {/* <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group"><IdentificationIcon className="w-5 h-5 group-hover:text-primary-light" /> Identification</li> */}
                             {/* <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group"><UserPlusIcon className="w-5 h-5 group-hover:text-primary-light" /> Referral</li> */}
                             <li className="flex gap-3 whitespace-nowrap p-4 hover:bg-gray-100 cursor-pointer group border-t border-gray-200" onClick={() => signOut()}><ArrowLeftOnRectangleIcon className="w-5 h-5 group-hover:text-primary-light" /> Log Out</li>
                         </PopoverContent>

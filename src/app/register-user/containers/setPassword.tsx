@@ -55,7 +55,7 @@ const SetPassword = ({ onFormUpdate, onFormSubmit }: stageProp) => {
                             <input
                                 {...register("password")}
                                 type="password" id="password" onChange={(e) => onFormUpdate('password', e.target.value)} className="border w-full outline-0 px-3 py-3 text-lg rounded-sm focus:border-primary-dark" />
-                            <button type="button" className="absolute right-4 flex text-slate-400 items-center gap-1"><EyeSlashIcon className="w-5 h-5" /></button>
+                            {/* <button type="button" className="absolute right-4 flex text-slate-400 items-center gap-1"><EyeSlashIcon className="w-5 h-5" /></button> */}
                         </div>
                         {errors.password &&
                             <small className="text-red-500">{`${errors.password.message}`}</small>

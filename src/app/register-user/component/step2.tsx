@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 interface stageProp {
-  onStageChange: (value: number) => void;
+  onStageChange: (value: number, email?: string) => void;
 }
 
 export default function Step2({ onStageChange }: stageProp) {
@@ -18,7 +18,7 @@ export default function Step2({ onStageChange }: stageProp) {
     <>
       <div className='flex flex-col h-[100vh]'>
         <Header />
-        <GoBack onStageChange={onStageChange}/>
+        <GoBack onStageChange={onStageChange} />
         <EmailVerify onStageChange={onStageChange} />
       </div>
     </>

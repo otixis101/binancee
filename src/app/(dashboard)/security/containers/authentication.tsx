@@ -1,7 +1,12 @@
+"use client"
+
 import { CheckBadgeIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
+import { signIn, useSession } from 'next-auth/react'
+
 const Authentication = () => {
+    const { data: session } = useSession();
     return (
         <section className='px-8 flex flex-col gap-4'>
             <h1 className="text-xl text-gray-800 font-semibold mt-4 mb-2">Authentication</h1>
@@ -15,7 +20,7 @@ const Authentication = () => {
                     <div className='flex gap-2 items-center'>
                         <CheckCircleIcon className="w-4 h-4 text-green-600" />
                         <small className='font-semibold'>
-                            ot***@protonmail.com
+                            {session?.user?.email}
                         </small>
                     </div>
                     <button className='px-4 py-2 text-sm rounded-md bg-gray-200'>

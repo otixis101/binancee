@@ -22,7 +22,7 @@ const emailSchema = z.object({
 
 
 interface stageProp {
-    onStageChange: (value: number) => void;
+    onStageChange: (value: number, email?: string) => void;
     onFormUpdate: (key: string, value: any) => void;
 }
 
@@ -51,7 +51,7 @@ const RegisterUser = ({ onStageChange, onFormUpdate }: stageProp) => {
                 })
             }
             else {
-                onStageChange(2);
+                onStageChange(2, data.email);
             }
         })
     }

@@ -78,10 +78,3 @@ export async function POST(req: Request){
 
 }
 
-// // Usage example
-// const user: User = { id: 1, /* ... other user data */ };
-// const asset: Asset = { id: 1, /* ... other asset data */ balance: 100 };
-// const amount: number = 10.0;
-// const transactionType: TransactionType = TransactionType.DEPOSIT;
-
-// createTransaction(user, asset, amount, transactionType);

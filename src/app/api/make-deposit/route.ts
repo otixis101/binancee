@@ -54,10 +54,10 @@ export async function POST(req: Request){
     
 
     // Save changes to the asset
-    await db.asset.update({
-      where: { id: asset?.id },
-      data: { balance: asset?.balance },
-    });
+    // await db.asset.update({
+    //   where: { id: asset?.id },
+    //   data: { balance: asset?.balance },
+    // });
 
     return NextResponse.json({message: "Deposit Transaction created Successfully!", isError: false},{status: 200});
   } catch (error) {

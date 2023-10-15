@@ -54,7 +54,6 @@ const LoginForm = () => {
     const onSubmit = async (data: FieldValues) => {
         const result = await signIn('credentials', { ...data, redirect: false });
 
-        console.log(result);
         if (result && result?.error) {
             setError({
                 is: true,

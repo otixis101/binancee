@@ -71,10 +71,10 @@ export async function POST(req: Request){
 
 
     // Save changes to the asset
-    await db.asset.update({
-      where: { id: asset?.id },
-      data: { balance: asset?.balance },
-    });
+    // await db.asset.update({
+    //   where: { id: asset?.id },
+    //   data: { balance: asset?.balance },
+    // });
 
     return NextResponse.json({message: transactionType + ': Transaction was Successful!'},{status: 201});
   } catch (error) {

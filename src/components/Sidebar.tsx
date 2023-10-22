@@ -37,14 +37,14 @@ const Sidebar = () => {
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Security</div>
                     </Link>
                 </li>
-                {/* <li>
+                <li>
                     <Link href={'/identification'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/identification') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"
                     )}>
                         <IdentificationIcon className="w-5 h-5 group-hover:text-gray-800 group-hover:fill-gray-800 fill-gray-500" />
                         <div className="group-hover:text-gray-800 group-hover:font-medium">Identification</div>
                     </Link>
-                </li> */}
+                </li>
                 <li>
                     <Link href={'/wallet'} className={classNames("flex items-center gap-2 px-4 py-4 border-l-4 hover:bg-gray-100  group",
                         pathname.includes('/wallet') ? "bg-gray-100 border-primary-dark" : "bg-white border-white"

@@ -158,6 +158,7 @@ const Deposit = () => {
                                                     <SelectItem value="eth">Ethereum</SelectItem>
                                                     <SelectItem value="usdt">USDT</SelectItem>
                                                     <SelectItem value="ltc">Litcoin</SelectItem>
+                                                    <SelectItem value="bnb">BNB</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>

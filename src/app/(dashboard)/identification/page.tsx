@@ -11,10 +11,10 @@ import imgFull from '@/assets/images/full-page-icon-poa.svg'
 import { useState } from 'react'
 
 
-export const metadata: Metadata = {
-    title: 'Binancee | Verficiation Set Up',
-    description: 'Verification page for KYC',
-}
+// export const metadata: Metadata = {
+//     title: 'Binancee | Verficiation Set Up',
+//     description: 'Verification page for KYC',
+// }
 
 const Page = () => {
 

@@ -36,6 +36,8 @@ model User {
   Investments   Investments[]
   Deposits      Deposits[]
   Withdrawals   Withdrawals[]
+  File          File[]
+  Kyc           Kyc[]
 }
 
 model Account {
@@ -153,6 +155,34 @@ enum InvestmentStatus {
   STARTED
   CANCELLED
   COMPLETED
+}
+
+model File {
+  id       String @id @default(uuid())
+  filename String
+  mimetype String
+  encoding String
+  data     Bytes
+  owner    User   @relation(fields: [ownerId], references: [id])
+  ownerId  String
+}
+
+model Kyc {
+  id          String    @id @default(uuid())
+  address     String
+  city        String
+  country     String
+  postal_code String
+  state       String
+  status      KycStatus @default(SUCCESS)
+  owner       User      @relation(fields: [ownerId], references: [id])
+  ownerId     String
+}
+
+enum KycStatus {
+  SUCCESS
+  PENDING
+  FAILED
 }
 
 // model Session {

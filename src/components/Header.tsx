@@ -27,7 +27,7 @@ const Header = () => {
             <ul className="px-4 py-4">
                 <li className="font-bold text-primary-dark text-xl"><Link href={"/"}>BINANCE<span className="text-xs font=bold text-slate-900">VIP</span></Link></li>
             </ul>
-            <ul className="px-4 py-4 flex gap-4 md:justify-end text-sm w-full md:w-[50%] items-center">
+            <ul className="px-4 py-4 flex gap-4 justify-end text-sm w-full md:w-[50%] items-center">
                 {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"/pricing"}>Pricing</Link></li> */}
                 {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"/about"}>About</Link></li> */}
                 {/* <li className="hidden md:flex hover:text-primary-dark"><Link href={"#"}>FAQs</Link></li> */}

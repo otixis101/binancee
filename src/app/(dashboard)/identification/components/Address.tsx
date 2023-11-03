@@ -3,14 +3,38 @@
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, InfoIcon } from 'lucide-react'
 
+import { FieldValues, useForm } from "react-hook-form"
+
 import { useRouter } from 'next/navigation'
+import z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 interface iDetails {
     stepChange: (value: number) => void
+    onFormUpdate: (key: string, value: any) => void;
 }
 
-const Address = ({ stepChange }: iDetails) => {
+const formSchema = z.object({
+    address: z.string(),
+    postal_code: z.number()
+})
+
+const Address = ({ stepChange, onFormUpdate }: iDetails) => {
+
     const router = useRouter()
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting }
+    } = useForm({
+        resolver: zodResolver(formSchema),
+    })
+
+    const onSubmit = async (data: FieldValues) => {
+        //move to next stage
+
+    }
     return (
 
         <div className='w-full lg:w-4/5 flex flex-col p-8'>
@@ -24,31 +48,31 @@ const Address = ({ stepChange }: iDetails) => {
                     <label htmlFor="add" className='text-sm'>
                         Residential Address
                     </label>
-                    <input type="text" className='focus:outline-primary border p-2' />
+                    <input type="text" id='add' onChange={(e) => onFormUpdate('address', e.target.value)} className='focus:outline-primary border p-2' />
                 </div>
                 <div className='flex flex-col gap-2 lg:col-span-6'>
-                    <label htmlFor="add" className='text-sm'>
+                    <label htmlFor="postal_code" className='text-sm'>
                         Postal Code
                     </label>
-                    <input type="text" className='focus:outline-primary border p-2' />
+                    <input type="text" id="postal_code" onChange={(e) => onFormUpdate('postal_code', e.target.value)} className='focus:outline-primary border p-2' />
                 </div>
                 <div className='flex flex-col gap-2 lg:col-span-6'>
-                    <label htmlFor="add" className='text-sm'>
-                        city
+                    <label htmlFor="city" className='text-sm'>
+                        City
                     </label>
-                    <input type="text" className='focus:outline-primary border p-2' />
+                    <input type="text" id="city" onChange={(e) => onFormUpdate('city', e.target.value)} className='focus:outline-primary border p-2' />
                 </div>
                 <div className='flex flex-col gap-2 lg:col-span-12'>
-                    <label htmlFor="add" className='text-sm'>
-                        state
+                    <label htmlFor="state" className='text-sm'>
+                        State
                     </label>
-                    <input type="text" className='focus:outline-primary border p-2' />
+                    <input type="text" id='state' onChange={(e) => onFormUpdate('state', e.target.value)} className='focus:outline-primary border p-2' />
                 </div>
                 <div className='flex flex-col gap-2 lg:col-span-12'>
-                    <label htmlFor="add" className='text-sm'>
+                    <label htmlFor="country" className='text-sm'>
                         Country/Region
                     </label>
-                    <input type="text" className='focus:outline-primary border p-2' />
+                    <input type="text" id="country" onChange={(e) => onFormUpdate('country', e.target.value)} className='focus:outline-primary border p-2' />
                 </div>
 
             </section>

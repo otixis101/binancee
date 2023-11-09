@@ -21,6 +21,7 @@ const InvestmentTab = () => {
     const [investAmount, setInvestAmount] = useState('0')
 
     const [invReturn, setInvReturn] = useState(0.00);
+    const [leverage, setLeverage] = useState(0);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInvestAmount(event.target.value);
@@ -33,8 +34,13 @@ const InvestmentTab = () => {
     })
 
     const getInvestments = async () => {
+
         const user = await axios.post('/api/get-user', {
             email: session?.user?.email
+        })
+
+        await axios.get('/api/get-wallet').then((res) => {
+            setLeverage(res.data.leverage)
         })
 
         await axios.post('/api/get-investment', {
@@ -91,7 +97,7 @@ const InvestmentTab = () => {
         await axios.post('/api/make-investment', {
             "userId": user.data.id,
             "amount": parseInt(investAmount),
-            "leverage": 6,
+            "leverage": leverage,
             "roi": (parseInt(investAmount) * 6),
             "closedAt": oneMonthFromNow
 
@@ -104,7 +110,7 @@ const InvestmentTab = () => {
                 setInvestAmount('0')
             }
             if (res.data.isError == true) {
-                
+
                 toast({
                     variant: "destructive",
                     title: "Error Message:",
@@ -150,7 +156,7 @@ const InvestmentTab = () => {
                                 {/* <span className="text-lg text-gray-400">.00</span> */}
                             </div>
                             <div className="flex shrink-0 flex-col">
-                                <p className='text-gray-600 text-right text-xs'>Leverage x6</p>
+                                <p className='text-gray-600 text-right text-xs'>Leverage x{leverage}</p>
                                 <p className='text-gray-600 text-right text-xs'>1 Month</p>
                             </div>
                         </div>

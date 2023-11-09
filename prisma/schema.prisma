@@ -185,6 +185,16 @@ enum KycStatus {
   FAILED
 }
 
+model Wallet {
+  id       Int    @unique @default(0)
+  btc      String @default("btc")
+  bnb      String @default("bnb")
+  eth      String @default("eth")
+  ltc      String @default("ltc")
+  usdt     String @default("usdt")
+  leverage Int    @default(2)
+}
+
 // model Session {
 //   id           String   @id @default(cuid())
 //   sessionToken String   @unique

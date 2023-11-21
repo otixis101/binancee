@@ -63,14 +63,14 @@ const Deposit = () => {
         }, 2000);
     }
 
-    const getCryptoAddresses = async () => {
-        // setResult(() => null)
-        const res = await fetch('/api/get-wallet')
-        let data = await res.json();
-        setResult(() => data)
-        // console.log(data)
-    }
     useEffect(() => {
+        const getCryptoAddresses = async () => {
+            // setResult(() => null)
+            const res = await fetch('/api/get-wallet')
+            let data = await res.json();
+            setResult(() => data)
+            // console.log(data)
+        }
         getCryptoAddresses();
     }, [])
 
